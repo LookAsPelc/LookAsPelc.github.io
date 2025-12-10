@@ -1,13 +1,31 @@
 title: "Lukášův hub"
-description: "Osobní dokumentace, projekty a linkyní dokumentace, projekty a linky"
+description: "Osobní dokumentace, projekty a linky"
+author: "Lukáš Pelc"
 
-remote_theme: yaoyao-liu/minimal-light
+# Site URL settings
+url: "https://lookaspecl.github.io"
+baseurl: "" # the subpath of your site, e.g. /blog
+lang: cs
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# MathJax support for mathematical notation
+kramdown:
+  math_engine: mathjax
 
 plugins:
   - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
+remote_theme: yaoyao-liu/minimal-light
+
+# color_scheme: dark  # dark / light / auto
 
 # Nastavení přímo pro tenhle theme (viz README tématu)
-# auto_dark_mode: true      # automaticky respektuje dark/light podle systému
+auto_dark_mode: true      # automaticky respektuje dark/light podle systému
 # font: "Sans Serif"        # nebo "Serif"
-# enable_footnote: false    # vypne „Powered by…“ v patičce, pokud nechceš
+# enable_footnote: false    # vypne „Powered by…" v patičce, pokud nechceš
