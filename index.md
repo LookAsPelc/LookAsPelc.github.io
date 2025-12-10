@@ -11,7 +11,7 @@ které chci sdílet s ostatními.
 
 ## Sekce
 
-- [Poznámky](/poznamky/) – osobní dokumentace a taháky
-- [Projekty](/projekty/) – moje projekty a nástroje
-- [Rodina](/rodina/) – rodinná alba a sdílené věci
+- [Poznámky](/blog/poznamky/) – osobní dokumentace a taháky
+- [Projekty](/blog/projekty/) – moje projekty a nástroje
+- [Rodina](/blog/rodina/) – rodinná alba a sdílené věci
 

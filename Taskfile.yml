@@ -1,0 +1,89 @@
+version: '3'
+
+vars:
+  JEKYLL_ENV: development
+
+tasks:
+  install:
+    desc: Instaluje Ruby závislosti
+    cmds:
+      - bundle install
+
+  serve:
+    desc: Spustí Jekyll development server
+    cmds:
+      - bundle exec jekyll serve --host 0.0.0.0 --livereload
+
+  serve:bg:
+    desc: Spustí Jekyll development server na pozadí
+    cmds:
+      - bundle exec jekyll serve --host 0.0.0.0 --detach
+
+  build:
+    desc: Sestaví statický web do _site/
+    cmds:
+      - bundle exec jekyll build
+
+  build:prod:
+    desc: Sestaví statický web pro produkci
+    env:
+      JEKYLL_ENV: production
+    cmds:
+      - bundle exec jekyll build
+
+  clean:
+    desc: Vyčistí _site/ a cache
+    cmds:
+      - bundle exec jekyll clean
+
+  update:
+    desc: Aktualizuje Ruby závislosti
+    cmds:
+      - bundle update
+
+  lint:
+    desc: Kontrola kvality Markdown souborů
+    cmds:
+      - echo "Linting není nakonfigurován, přidej markdownlint nebo podobný nástroj"
+
+  test:
+    desc: Otestuje build a odkazy
+    cmds:
+      - task: build
+      - echo "Test dokončen - přidej htmlproofer pro kontrolu odkazů"
+
+  deploy:
+    desc: Nasadí na GitHub Pages (push do main)
+    cmds:
+      - git add .
+      - git commit -m "Deploy {{now | date "2006-01-02 15:04:05"}}" || true
+      - git push origin main
+
+  new:
+    desc: Vytvoří novou poznámku (použití - task new -- nazev-poznamky)
+    cmds:
+      - |
+        NAME={{.CLI_ARGS}}
+        if [ -z "$NAME" ]; then
+          echo "Použití: task new -- nazev-poznamky"
+          exit 1
+        fi
+        DATE=$(date '+%Y-%m-%d')
+        FILE="blog/poznamky/${NAME}.md"
+        cat > "$FILE" << EOF
+        ---
+        layout: default
+        title: "${NAME}"
+        date: ${DATE}
+        ---
+
+        # ${NAME}
+
+        Obsah poznámky zde...
+        EOF
+        echo "Vytvořeno: $FILE"
+
+  help:
+    desc: Zobrazí nápovědu
+    cmds:
+      - task --list

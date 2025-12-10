@@ -16,16 +16,21 @@ kramdown:
   math_engine: mathjax
 
 plugins:
-  - jekyll-remote-theme
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
 
-remote_theme: yaoyao-liu/minimal-light
+# Theme - pro testování různých témat změňte tuto řádku:
+# Možnosti: minima, jekyll-theme-minimal, jekyll-theme-cayman, jekyll-theme-slate
+# nebo použijte remote_theme pro externí témata
+theme: minima
 
-# color_scheme: dark  # dark / light / auto
-
-# Nastavení přímo pro tenhle theme (viz README tématu)
-auto_dark_mode: true      # automaticky respektuje dark/light podle systému
-# font: "Sans Serif"        # nebo "Serif"
-# enable_footnote: false    # vypne „Powered by…" v patičce, pokud nechceš
+# Minima settings
+minima:
+  skin: dark  # classic, dark, auto, solarized, solarized-dark
+  
+# Navigace (pro Minima theme)
+header_pages:
+  - blog/poznamky/index.md
+  - blog/projekty/index.md
+  - blog/rodina/index.md
