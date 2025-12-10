@@ -1,6 +1,7 @@
 ---
-layout: default
-title: "Moje linky"
+title: " 👀 "
+description: "Lukášův blogísek"
+theme: jekyll-theme-minimal
 ---
 
 # Moje linky

@@ -69,3 +69,40 @@ code {
 ul {
   padding-left: 1.25rem;
 }
+
+.site-nav {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  color: #e5e7eb;
+  opacity: 0.85;
+}
+
+.site-nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.card {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #1f2937;
+  background: #020617;
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.card-body {
+  font-size: 0.95rem;
+  color: #d1d5db;
+}
