@@ -9,8 +9,10 @@ Tady budou alba a věci, které sdílím s rodinou.
 
 ## Alba
 
-- [Léto 2025](https://photos.app.goo.gl/...)
-- [Vánoce 2024](https://photos.app.goo.gl/...)
+### Zonerama
+- [Rozcestník](https://zonerama.com/lukas-pelc/10455)
+
+### Google věci
 
 ## Další odkazy
 

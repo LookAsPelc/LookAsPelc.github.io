@@ -7,5 +7,5 @@ title: "Poznámky"
 
 Takový dumping ground na osobní dokumentaci, kterou chci mít veřejně / nasdílenou.
 
-- [Elastické moduly – tahák](poznamka-elasticke-moduly.html)
+- [Elastické moduly – tahák](elasticke-moduly.html)
 - [LAW sklo – přehled](poznamka-law.html)

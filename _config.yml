@@ -1,4 +1,13 @@
 title: "Lukášův hub"
-description: "Osobní dokumentace a linky"
-markdown: kramdown
-theme: null
+description: "Osobní dokumentace, projekty a linkyní dokumentace, projekty a linky"
+
+remote_theme: yaoyao-liu/minimal-light
+
+plugins:
+  - jekyll-remote-theme
+
+
+# Nastavení přímo pro tenhle theme (viz README tématu)
+# auto_dark_mode: true      # automaticky respektuje dark/light podle systému
+# font: "Sans Serif"        # nebo "Serif"
+# enable_footnote: false    # vypne „Powered by…“ v patičce, pokud nechceš
