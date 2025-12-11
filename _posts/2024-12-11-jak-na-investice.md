@@ -289,7 +289,7 @@ _Investiční horizont: Timeframe = frame of mind._
 
 ## YouTube kanály
 
-- Kicom – [uvoddobtc.cz](http://uvoddobtc.cz/)
+- Kicom – [uvoddobtc.cz](https://uvoddobtc.cz/)
 - [Investocka](https://www.youtube.com/playlist?list=PLarAuyw36jiAotbACtTMG1YzM_-R8nGN8)
 - [Investiční brambora](https://www.youtube.com/c/Investi%C4%8Dn%C3%ADbrambora)
 - [Vojta Žižka](https://www.youtube.com/@VojtaZizka)
