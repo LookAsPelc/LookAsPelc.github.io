@@ -35,6 +35,15 @@ tasks:
     desc: Vyčistí _site/ a cache
     cmds:
       - bundle exec jekyll clean
+      - rm -rf .jekyll-cache .jekyll-metadata
+
+  serve:clean:
+    desc: Vyčistí cache a spustí server (užitečné po změně tématu)
+    cmds:
+      - pkill -f jekyll 2>/dev/null || true
+      - task: clean
+      - task: build
+      - bundle exec jekyll serve --host 0.0.0.0 --livereload
 
   update:
     desc: Aktualizuje Ruby závislosti
@@ -82,6 +91,11 @@ tasks:
         Obsah poznámky zde...
         EOF
         echo "Vytvořeno: $FILE"
+
+  theme:
+    desc: Zobrazí dostupná témata a návod na použití
+    cmds:
+      - cat THEMES.md
 
   help:
     desc: Zobrazí nápovědu

@@ -1,0 +1,101 @@
+---
+# Jekyll front matter pro procesování SCSS
+---
+
+/* Minima theme - vychozí barvy (light mode) */
+/* Zde se importuje vychozi Minima nastaveni */
+
+/* Dark mode - automaticky se pouzije kdyz ma OS/prehlizec dark theme */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e0e0e0;
+    background-color: #1a1a1a;
+  }
+
+  a {
+    color: #7aa3e5;
+  }
+
+  a:visited {
+    color: #a37dda;
+  }
+
+  a:hover {
+    color: #e0e0e0;
+    text-decoration: underline;
+  }
+
+  blockquote {
+    color: #999999;
+    border-left-color: #444444;
+  }
+
+  pre, code {
+    background-color: #2a2a2a;
+    border-color: #444444;
+    color: #e0e0e0;
+  }
+
+  .site-title, .site-title:visited {
+    color: #e0e0e0;
+  }
+
+  .site-nav .page-link {
+    color: #e0e0e0;
+  }
+
+  .page-content {
+    background-color: #1a1a1a;
+  }
+
+  .post-meta {
+    color: #999999;
+  }
+
+  .post-content h1,
+  .post-content h2,
+  .post-content h3,
+  .post-content h4,
+  .post-content h5,
+  .post-content h6 {
+    color: #e0e0e0;
+  }
+
+  table {
+    color: #d0d0d0;
+    border-color: #444444;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #252525;
+  }
+
+  table th {
+    background-color: #333333;
+    border-color: #555555;
+  }
+
+  table td {
+    border-color: #444444;
+  }
+
+  .footer-col-wrapper {
+    color: #999999;
+  }
+
+  .contact-list,
+  .social-media-list {
+    color: #999999;
+  }
+
+  /* Syntax highlighting - dark mode */
+  .highlight {
+    background-color: #2a2a2a;
+  }
+
+  .highlight .c { color: #8a8a8a; } /* Comment */
+  .highlight .k { color: #d8a384; } /* Keyword */
+  .highlight .n { color: #d0d0d0; } /* Name */
+  .highlight .s { color: #a8c68f; } /* String */
+  .highlight .m { color: #b8a1d8; } /* Number */
+}

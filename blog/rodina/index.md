@@ -1,6 +1,6 @@
 ---
-layout: default
 title: "Rodina"
+layout: post
 ---
 
 # Rodina

@@ -66,3 +66,7 @@ vendor/
 # OS
 .DS_Store
 Thumbs.db
+
+# Theme testing configs (local only)
+theme-configs/
+setup-theme-configs.sh

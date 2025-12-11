@@ -1,0 +1,18 @@
+---
+layout: null
+---
+[
+{% assign items = site.pages | concat: site.posts %}
+{% assign first = true %}
+{% for item in items %}
+  {% if item.search_exclude != true and item.title %}
+    {% unless first %},{% endunless %}
+    {% assign first = false %}
+    {
+      "title": {{ item.title | jsonify }},
+      "url": {{ item.url | relative_url | jsonify }},
+      "content": {{ item.content | strip_html | normalize_whitespace | jsonify }}
+    }
+  {% endif %}
+{% endfor %}
+]

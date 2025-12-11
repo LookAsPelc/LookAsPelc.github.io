@@ -1,0 +1,61 @@
+title: "Lukášův hub"
+description: "Osobní dokumentace, projekty a linky"
+author: "Lukáš Pelc"
+
+# Site URL settings
+url: "https://lookaspecl.github.io"
+baseurl: "" # the subpath of your site, e.g. /blog
+lang: cs
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# MathJax support for mathematical notation
+kramdown:
+  math_engine: mathjax
+
+# Theme - Chirpy (moderní technický blog s dark modem)
+theme: jekyll-theme-chirpy
+
+plugins:
+  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-archives
+  - jekyll-sitemap
+
+# Chirpy theme settings
+# theme_mode: auto  # Commented out to use custom mode-toggle
+
+# Social links (sidebar)
+social:
+  name: Lukáš Pelc
+  email: ""
+  links:
+    - https://github.com/LookAsPelc
+
+# Pagination (pro Chirpy)
+paginate: 10
+paginate_path: "/page:num/"
+
+# Jekyll Archives (kategorie a tagy)
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
+
+# Syntax highlighting (Minima má vestavěné)
+highlighter: rouge
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Poznámky:
+# - Chirpy používá gem-based theme instalaci
+# - Dark mode: auto (přepíná podle systému)
+# - Vestavěné vyhledávání: ✓
+# - Syntax highlighting: ✓ (Rouge)
+# - Sidebar navigace: automatická z _tabs/ složky
