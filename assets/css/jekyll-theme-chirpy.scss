@@ -100,6 +100,11 @@ a:visited:hover {
 /* Placeholder %tag-hover používá var(--tag-hover) pro background,
    ale text color musíme přidat explicitně podle mode. */
 
+.tag,
+.post-tag {
+  border-color: var(--tag-border) !important;
+}
+
 .tag:hover,
 .post-tag:hover {
   /* V light mode černý text na žluté */
