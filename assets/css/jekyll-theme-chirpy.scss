@@ -11,36 +11,67 @@
 /* append your custom style below */
 
 /*
- * Jemné přeladění do žluta přes CSS proměnné,
- * bez sahání do interní struktury šablony.
+ * Žluté téma (zlaté odstíny)
+ * Přepisuje vybrané barvy z _sass/themes/_light.scss a _dark.scss
  */
 
-/* Základní žluté odstíny */
-$yellow-light: #d4a017;  /* pro světlý režim */
-$yellow-dark:  #ffd700;  /* pro tmavý režim */
-
-/*
- * Světlý režim – použije se pro výchozí stav a pro data-mode="light".
- * Ovlivní hlavně odkazy, zvýraznění v TOC, aktivní položky v menu a tagy.
- */
 html {
-  --link-color: #{$yellow-light};
-  --toc-highlight: #{$yellow-light};
-  --sidebar-active-color: #{$yellow-light};
+  @media (prefers-color-scheme: light) {
+    &:not([data-mode]),
+    &[data-mode='light'] {
+      /* Light mode – tmavší zlatá, aby byla čitelná na bílém */
+      --link-color: #d4a017;
+      --toc-highlight: #d4a017;
+      --sidebar-active-color: #d4a017;
+      --checkbox-checked-color: #d4a017;
+      --btn-share-hover-color: #d4a017;
 
-  /* Tagy / štítky */
-  --tag-border: #{$yellow-light};
-  --tag-shadow: rgba(212, 160, 23, 0.4);
-  --tag-hover: rgba(212, 160, 23, 0.15);
-}
+      /* Tagy */
+      --tag-border: #d4a017;
+      --tag-shadow: rgba(212, 160, 23, 0.3);
+      --tag-hover: rgba(212, 160, 23, 0.15);
+    }
 
-/* Tmavý režim – trochu světlejší žlutá, ať víc svítí na tmavém pozadí */
-html[data-mode='dark'] {
-  --link-color: #{$yellow-dark};
-  --toc-highlight: #{$yellow-dark};
-  --sidebar-active-color: #{$yellow-dark};
+    &[data-mode='dark'] {
+      /* Dark mode (když je přepnuto ručně i v light prefers-color-scheme) */
+      --link-color: #ffd700;
+      --toc-highlight: #ffd700;
+      --sidebar-active-color: #ffd700;
+      --checkbox-checked-color: #ffd700;
+      --btn-share-hover-color: #ffd700;
 
-  --tag-border: #{$yellow-dark};
-  --tag-shadow: rgba(255, 215, 0, 0.45);
-  --tag-hover: rgba(255, 215, 0, 0.18);
+      --tag-border: #ffd700;
+      --tag-shadow: rgba(255, 215, 0, 0.4);
+      --tag-hover: rgba(255, 215, 0, 0.15);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:not([data-mode]),
+    &[data-mode='dark'] {
+      /* Dark mode – jasná žlutá, ať svítí na tmavém */
+      --link-color: #ffd700;
+      --toc-highlight: #ffd700;
+      --sidebar-active-color: #ffd700;
+      --checkbox-checked-color: #ffd700;
+      --btn-share-hover-color: #ffd700;
+
+      --tag-border: #ffd700;
+      --tag-shadow: rgba(255, 215, 0, 0.4);
+      --tag-hover: rgba(255, 215, 0, 0.15);
+    }
+
+    &[data-mode='light'] {
+      /* Light mode (když je přepnuto ručně i v dark prefers-color-scheme) */
+      --link-color: #d4a017;
+      --toc-highlight: #d4a017;
+      --sidebar-active-color: #d4a017;
+      --checkbox-checked-color: #d4a017;
+      --btn-share-hover-color: #d4a017;
+
+      --tag-border: #d4a017;
+      --tag-shadow: rgba(212, 160, 23, 0.3);
+      --tag-hover: rgba(212, 160, 23, 0.15);
+    }
+  }
 }
