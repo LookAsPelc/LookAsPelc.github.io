@@ -30,9 +30,6 @@ html {
       --tag-border: #d4a017;
       --tag-shadow: rgba(212, 160, 23, 0.3);
       --tag-hover: rgba(212, 160, 23, 0.15);
-
-      /* Post tags v Recently Updated */
-      --search-tag-bg: #fef3cd;
     }
 
     &[data-mode='dark'] {
@@ -46,8 +43,6 @@ html {
       --tag-border: #ffd700;
       --tag-shadow: rgba(255, 215, 0, 0.4);
       --tag-hover: rgba(255, 215, 0, 0.15);
-
-      --search-tag-bg: #332701;
     }
   }
 
@@ -64,8 +59,6 @@ html {
       --tag-border: #ffd700;
       --tag-shadow: rgba(255, 215, 0, 0.4);
       --tag-hover: rgba(255, 215, 0, 0.15);
-
-      --search-tag-bg: #332701;
     }
 
     &[data-mode='light'] {
@@ -79,20 +72,66 @@ html {
       --tag-border: #d4a017;
       --tag-shadow: rgba(212, 160, 23, 0.3);
       --tag-hover: rgba(212, 160, 23, 0.15);
-
-      --search-tag-bg: #fef3cd;
     }
   }
 }
 
-/* Trending Tags buttons – přepsat Bootstrap modrou na žlutou */
-.post-tag.btn.btn-outline-primary {
-  color: var(--link-color);
-  border-color: var(--link-color);
+/* 
+ * Opravy specifických elementů, které nepoužívají proměnné 
+ * nebo mají hardcoded barvy v šabloně.
+ */
 
-  &:hover {
-    background-color: var(--link-color);
-    border-color: var(--link-color);
-    color: #000;
-  }
+/* 1. Oprava oranžových odkazů (Recently Updated, atd.) */
+a:hover {
+  color: var(--link-color) !important;
+  border-bottom-color: var(--link-color) !important;
 }
+
+#access-lastmod a:hover {
+  color: var(--link-color) !important;
+  border-bottom: none;
+}
+
+/* 2. Oprava modrých tagů (Trending Tags) */
+.tag, .post-tag {
+  border-color: var(--tag-border) !important;
+  color: var(--link-color) !important; /* Vynutit barvu textu */
+}
+
+.tag:hover, .post-tag:hover {
+  background-color: var(--tag-hover) !important;
+  border-color: var(--tag-border) !important;
+  color: var(--link-color) !important;
+}
+
+/* 3. Oprava modrých tlačítek (Bootstrap overrides) */
+.btn-outline-primary {
+  --bs-btn-color: var(--link-color);
+  --bs-btn-border-color: var(--link-color);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--link-color);
+  --bs-btn-hover-border-color: var(--link-color);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--link-color);
+  --bs-btn-active-border-color: var(--link-color);
+  
+  color: var(--link-color) !important;
+  border-color: var(--link-color) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--link-color) !important;
+  color: #fff !important;
+}
+
+/* Tmavý režim - černý text na žlutém tlačítku pro lepší kontrast */
+html[data-mode='dark'] .btn-outline-primary:hover {
+  color: #000 !important;
+}
+
+/* 4. Oprava výběru textu (modrá -> žlutá) */
+::selection {
+  background: var(--link-color);
+  color: #000;
+}
+
