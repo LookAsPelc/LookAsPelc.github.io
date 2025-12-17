@@ -1,6 +1,5 @@
 ---
 layout: null
-title: 404
 permalink: /404.html
 ---
 <!DOCTYPE html>
@@ -8,327 +7,109 @@ permalink: /404.html
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 | Nothingness</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>404 - Not Found</title>
   <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
-  <style>
-    :root {
-      --bg-start: #0b1020;
-      --bg-mid: #0b0f1a;
-      --bg-end: #000000;
-      --accent-1: #a78bfa; /* purple-400 */
-      --accent-2: #60a5fa; /* blue-400 */
-      --text: #e5e7eb;     /* slate-200 */
-      --muted: #94a3b8;    /* slate-400 */
-      --card: rgba(255,255,255,0.06);
-      --border: rgba(255,255,255,0.12);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-end);
-      color: var(--text);
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-    }
-
-    .existential-404 {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      display: grid;
-      place-items: center;
-      isolation: isolate;
-    }
-
-    .existential-404 .bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(1200px 600px at 50% 30%, var(--bg-mid), var(--bg-end)),
-                  radial-gradient(800px 400px at 20% 80%, #0c1430, transparent),
-                  linear-gradient(180deg, var(--bg-start), var(--bg-end));
-      opacity: 0.95;
-      z-index: -2;
-    }
-
-    .existential-404 .stars {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .existential-404 .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 2rem;
-      max-width: 800px;
-    }
-
-    .big-404 {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-    .big-404 .digits {
-      display: block;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      font-size: clamp(6rem, 20vw, 14rem);
-      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text;
-              background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 10px 30px rgba(96,165,250,0.35));
-    }
-    .big-404 .subtle {
-      position: absolute;
-      left: 50%;
-      top: 60%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(0.8rem, 2vw, 1.2rem);
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: rgba(147,197,253,0.3);
-      filter: blur(0.5px);
-      white-space: nowrap;
-    }
-
-    .headline {
-      font-weight: 800;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      margin: 0.5rem 0 1rem;
-      background: linear-gradient(to right, #fff, #cbd5e1);
-      -webkit-background-clip: text;
-              background-clip: text;
-      color: transparent;
-    }
-
-    .lead {
-      max-width: 50ch;
-      margin: 0 auto 2rem;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    .quote-card {
-      max-width: 40rem;
-      margin: 0 auto 2.5rem;
-      padding: 1.5rem 2rem;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-    .quote-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.2);
-    }
-    .quote-card .icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      display: block;
-      filter: grayscale(0.5);
-    }
-    .quote {
-      font-style: italic;
-      font-size: clamp(1rem, 1.5vw, 1.15rem);
-      color: #e2e8f0;
-      font-family: serif;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(15, 23, 42, 0.6);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(4px);
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      background: rgba(30, 41, 59, 0.8);
-    }
-    .btn.primary {
-      background: #ffffff;
-      color: #0f172a;
-      border-color: #ffffff;
-      box-shadow: 0 0 20px rgba(255,255,255,0.15);
-    }
-    .btn.primary:hover {
-      background: #f8fafc;
-      box-shadow: 0 0 30px rgba(255,255,255,0.25);
-    }
-
-    .footnote {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 0;
-      right: 0;
-      text-align: center;
-      opacity: 0.4;
-      font-size: 0.8rem;
-      pointer-events: none;
-    }
-
-    /* Stars Animation */
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 0.8; transform: scale(1.2); }
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: twinkle var(--twinkle, 3s) ease-in-out infinite;
-    }
-
-    @media (max-width: 600px) {
-      .actions { flex-direction: column; width: 100%; max-width: 300px; margin: 1rem auto; }
-      .btn { width: 100%; }
-    }
-  </style>
 </head>
-<body>
+<body style="margin:0;padding:0;overflow:hidden;height:100vh;width:100vw;background:#000;font-family:sans-serif;color:#e5e7eb;">
 
-<section class="existential-404" aria-labelledby="nf-title">
-  <div class="bg"></div>
-  <div class="stars" aria-hidden="true"></div>
+<section style="position:relative;height:100%;width:100%;display:grid;place-items:center;isolation:isolate;">
+  <div style="position:absolute;inset:0;background:radial-gradient(1200px 600px at 50% 30%, #0b0f1a, #000),linear-gradient(180deg, #0b1020, #000);opacity:0.95;z-index:-2;"></div>
+  <div id="stars" style="position:absolute;inset:0;pointer-events:none;z-index:-1;"></div>
 
-  <div class="content">
-    <div class="big-404" role="img" aria-label="404">
-      <span class="digits">404</span>
-      <span class="subtle">NOTHINGNESS</span>
+  <div style="position:relative;z-index:2;text-align:center;padding:2rem;max-width:800px;">
+    <div style="position:relative;display:inline-block;margin-bottom:1rem;">
+      <span style="display:block;font-weight:900;line-height:1;letter-spacing:-0.04em;font-size:clamp(6rem,20vw,14rem);background:linear-gradient(180deg,#a78bfa,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 30px rgba(96,165,250,0.35));">404</span>
+      <span style="position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:clamp(0.8rem,2vw,1.2rem);letter-spacing:0.5em;text-transform:uppercase;color:rgba(147,197,253,0.3);filter:blur(0.5px);white-space:nowrap;">NOTHINGNESS</span>
     </div>
 
-    <h2 id="nf-title" class="headline">Reality Glitch Detected</h2>
+    <h2 style="font-weight:800;font-size:clamp(1.5rem,4vw,2.5rem);margin:0.5rem 0 1rem;background:linear-gradient(to right,#fff,#cbd5e1);-webkit-background-clip:text;background-clip:text;color:transparent;">Reality Glitch Detected</h2>
 
-    <p class="lead">
+    <p style="max-width:50ch;margin:0 auto 2rem;color:#94a3b8;font-size:clamp(1rem,2vw,1.2rem);line-height:1.6;font-weight:300;">
       You've reached the void. We searched the servers, the database, and the collective unconscious, 
       but the page you are looking for does not exist in this dimension.
     </p>
 
-    <figure class="quote-card">
-      <figcaption class="icon" aria-hidden="true">🧭</figcaption>
-      <blockquote id="nf-quote" class="quote"></blockquote>
-    </figure>
-
-    <div class="actions">
-      <a class="btn primary" href="/" aria-label="Return to Home">
-        <span>Return to Reality</span>
-      </a>
-      <button class="btn" id="nf-oracle" type="button" aria-label="Get another quote">
-        <span id="oracle-icon">↻</span> Consult the Oracle
-      </button>
+    <div style="max-width:40rem;margin:0 auto 2.5rem;padding:1.5rem 2rem;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);box-shadow:0 4px 30px rgba(0,0,0,0.1);">
+      <div style="font-size:1.5rem;margin-bottom:0.5rem;display:block;filter:grayscale(0.5);">🧭</div>
+      <blockquote id="quote" style="font-style:italic;font-size:clamp(1rem,1.5vw,1.15rem);color:#e2e8f0;font-family:serif;margin:0;"></blockquote>
     </div>
 
-    <footer class="footnote" aria-hidden="true">Searching for meaning... since 1970 (Unix Epoch)</footer>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:1rem;">
+      <a href="/" style="display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:#ffffff;color:#0f172a;font-weight:600;font-size:0.95rem;cursor:pointer;text-decoration:none;transition:all 0.2s ease;backdrop-filter:blur(4px);">Return to Reality</a>
+      <button id="oracle" type="button" style="display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(15,23,42,0.6);color:#e5e7eb;font-weight:600;font-size:0.95rem;cursor:pointer;text-decoration:none;transition:all 0.2s ease;backdrop-filter:blur(4px);">↻ Consult the Oracle</button>
+    </div>
+
+    <footer style="opacity:0.4;font-size:0.8rem;pointer-events:none;margin-top:2rem;">Searching for meaning... since 1970 (Unix Epoch)</footer>
   </div>
 </section>
 
 <script>
-  (function () {
-    const quotes = [
-      "The page you are looking for is merely a social construct.",
-      "I think, therefore I am... 404.",
-      "Not all who wander are lost. But you? You definitely are.",
-      "We found the Answer (42), but we lost the Question (URL).",
-      "The unexamined URL is not worth visiting.",
-      "This page has ascended to a higher plane of existence.",
-      "Error 404: Meaning of Life not found. Try coffee instead.",
-      "Maybe the real page was the friends we made along the way.",
-      "If a tree falls in a forest and no one is around to hear it, does it make a 404 error?",
-      "You can't step into the same 404 page twice.",
-      "To err is human; to really foul things up requires a computer.",
-      "There is no spoon. There is no page.",
-      "Have you tried turning the universe off and on again?"
-    ];
+  const quotes = [
+    "The page you are looking for is merely a social construct.",
+    "I think, therefore I am... 404.",
+    "Not all who wander are lost. But you? You definitely are.",
+    "We found the Answer (42), but we lost the Question (URL).",
+    "The unexamined URL is not worth visiting.",
+    "This page has ascended to a higher plane of existence.",
+    "Error 404: Meaning of Life not found. Try coffee instead.",
+    "Maybe the real page was the friends we made along the way.",
+    "If a tree falls in a forest and no one is around to hear it, does it make a 404 error?",
+    "You can't step into the same 404 page twice.",
+    "To err is human; to really foul things up requires a computer.",
+    "There is no spoon. There is no page.",
+    "Have you tried turning the universe off and on again?"
+  ];
 
-    const container = document.querySelector('.existential-404');
-    const starsLayer = container.querySelector('.stars');
-    const quoteEl = document.getElementById('nf-quote');
-    const oracleBtn = document.getElementById('nf-oracle');
-    const oracleIcon = document.getElementById('oracle-icon');
+  const starsLayer = document.getElementById('stars');
+  const quoteEl = document.getElementById('quote');
+  const oracleBtn = document.getElementById('oracle');
+  const container = document.querySelector('section');
 
-    // Initialize quote
-    function setRandomQuote() {
-      const q = quotes[Math.floor(Math.random() * quotes.length)];
-      quoteEl.style.opacity = 0;
-      setTimeout(() => {
-        quoteEl.textContent = '"' + q + '"';
-        quoteEl.style.opacity = 1;
-      }, 200);
+  function setRandomQuote() {
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteEl.style.opacity = 0;
+    setTimeout(() => {
+      quoteEl.textContent = '"' + q + '"';
+      quoteEl.style.opacity = 1;
+    }, 200);
+  }
+  quoteEl.style.transition = 'opacity 0.2s ease';
+  setRandomQuote();
+
+  function makeStars(n = 80) {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('div');
+      const size = Math.random() * 2 + 1;
+      s.style.cssText = `position:absolute;background:white;border-radius:50%;width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:0.3;animation:twinkle ${(Math.random()*3+2).toFixed(2)}s ease-in-out infinite;`;
+      frag.appendChild(s);
     }
-    quoteEl.style.transition = 'opacity 0.2s ease';
+    starsLayer.innerHTML = '';
+    starsLayer.appendChild(frag);
+    const style = document.createElement('style');
+    style.textContent = '@keyframes twinkle { 0%,100% { opacity:0.2;transform:scale(0.8); } 50% { opacity:0.8;transform:scale(1.2); } }';
+    document.head.appendChild(style);
+  }
+  makeStars(80);
+
+  container.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    starsLayer.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
+    container.querySelector('div:nth-of-type(3)').style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+  });
+
+  oracleBtn.addEventListener('click', () => {
+    oracleBtn.style.transition = 'transform 0.5s ease';
+    oracleBtn.style.transform = 'rotate(360deg)';
+    setTimeout(() => {
+      oracleBtn.style.transition = 'none';
+      oracleBtn.style.transform = 'rotate(0deg)';
+    }, 500);
     setRandomQuote();
-
-    // Generate stars
-    function makeStars(n = 60) {
-      const frag = document.createDocumentFragment();
-      for (let i = 0; i < n; i++) {
-        const s = document.createElement('div');
-        const size = Math.random() * 2 + 1; 
-        s.className = 'star';
-        s.style.left = Math.random() * 100 + '%';
-        s.style.top = Math.random() * 100 + '%';
-        s.style.width = size + 'px';
-        s.style.height = size + 'px';
-        s.style.setProperty('--twinkle', (Math.random() * 3 + 2).toFixed(2) + 's');
-        frag.appendChild(s);
-      }
-      starsLayer.innerHTML = '';
-      starsLayer.appendChild(frag);
-    }
-    makeStars(80);
-
-    // Parallax effect
-    container.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      
-      starsLayer.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
-      container.querySelector('.content').style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
-    });
-
-    // Quote refresh animation
-    oracleBtn.addEventListener('click', () => {
-      oracleIcon.style.transition = 'transform 0.5s ease';
-      oracleIcon.style.transform = 'rotate(360deg)';
-      oracleIcon.style.display = 'inline-block';
-      
-      setTimeout(() => {
-        oracleIcon.style.transition = 'none';
-        oracleIcon.style.transform = 'rotate(0deg)';
-      }, 500);
-      
-      setRandomQuote();
-    });
-  })();
+  });
 </script>
+
 </body>
 </html>
