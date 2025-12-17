@@ -30,6 +30,9 @@ html {
       --tag-border: #d4a017;
       --tag-shadow: rgba(212, 160, 23, 0.3);
       --tag-hover: rgba(212, 160, 23, 0.15);
+
+      /* Post tags v Recently Updated */
+      --search-tag-bg: #fef3cd;
     }
 
     &[data-mode='dark'] {
@@ -43,6 +46,8 @@ html {
       --tag-border: #ffd700;
       --tag-shadow: rgba(255, 215, 0, 0.4);
       --tag-hover: rgba(255, 215, 0, 0.15);
+
+      --search-tag-bg: #332701;
     }
   }
 
@@ -59,6 +64,8 @@ html {
       --tag-border: #ffd700;
       --tag-shadow: rgba(255, 215, 0, 0.4);
       --tag-hover: rgba(255, 215, 0, 0.15);
+
+      --search-tag-bg: #332701;
     }
 
     &[data-mode='light'] {
@@ -72,6 +79,20 @@ html {
       --tag-border: #d4a017;
       --tag-shadow: rgba(212, 160, 23, 0.3);
       --tag-hover: rgba(212, 160, 23, 0.15);
+
+      --search-tag-bg: #fef3cd;
     }
+  }
+}
+
+/* Trending Tags buttons – přepsat Bootstrap modrou na žlutou */
+.post-tag.btn.btn-outline-primary {
+  color: var(--link-color);
+  border-color: var(--link-color);
+
+  &:hover {
+    background-color: var(--link-color);
+    border-color: var(--link-color);
+    color: #000;
   }
 }
