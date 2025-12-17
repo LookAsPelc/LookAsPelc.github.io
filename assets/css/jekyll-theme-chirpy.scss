@@ -1,92 +1,46 @@
 ---
 ---
 
-@use 'main';
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
 
-/* Custom Yellow Theme Overrides */
+/* append your custom style below */
 
-/* Light Mode Colors - Darker Yellow/Gold for contrast on white */
-$yellow-light-primary: #d4a017; 
-$yellow-light-hover: #b8860b;
+/*
+ * Jemné přeladění do žluta přes CSS proměnné,
+ * bez sahání do interní struktury šablony.
+ */
 
-/* Dark Mode Colors - Bright Yellow/Gold for contrast on dark */
-$yellow-dark-primary: #ffd700;
-$yellow-dark-hover: #ffea70;
+/* Základní žluté odstíny */
+$yellow-light: #d4a017;  /* pro světlý režim */
+$yellow-dark:  #ffd700;  /* pro tmavý režim */
 
-@mixin custom-light-scheme {
-  --link-color: #{$yellow-light-primary};
-  --toc-highlight: #{$yellow-light-primary};
-  --sidebar-active-color: #{$yellow-light-primary};
-  --checkbox-checked-color: #{$yellow-light-primary};
-  --btn-share-hover-color: #{$yellow-light-primary};
-  --tag-hover: #fff8e1;
-  --rel-label-color: #{$yellow-light-primary};
-  
-  /* Bootstrap overrides for light mode */
-  --bs-primary: #{$yellow-light-primary};
-  --bs-link-color: #{$yellow-light-primary};
-  --bs-link-hover-color: #{$yellow-light-hover};
-}
-
-@mixin custom-dark-scheme {
-  --link-color: #{$yellow-dark-primary};
-  --toc-highlight: #{$yellow-dark-primary};
-  --sidebar-active-color: #{$yellow-dark-primary};
-  --checkbox-checked-color: #{$yellow-dark-primary};
-  --btn-share-hover-color: #{$yellow-dark-primary};
-  --tag-hover: #423d02;
-  --rel-label-color: #{$yellow-dark-primary};
-
-  /* Bootstrap overrides for dark mode */
-  --bs-primary: #{$yellow-dark-primary};
-  --bs-link-color: #{$yellow-dark-primary};
-  --bs-link-hover-color: #{$yellow-dark-hover};
-}
-
+/*
+ * Světlý režim – použije se pro výchozí stav a pro data-mode="light".
+ * Ovlivní hlavně odkazy, zvýraznění v TOC, aktivní položky v menu a tagy.
+ */
 html {
-  @media (prefers-color-scheme: light) {
-    &:not([data-mode]),
-    &[data-mode='light'] {
-      @include custom-light-scheme;
-    }
+  --link-color: #{$yellow-light};
+  --toc-highlight: #{$yellow-light};
+  --sidebar-active-color: #{$yellow-light};
 
-    &[data-mode='dark'] {
-      @include custom-dark-scheme;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    &:not([data-mode]),
-    &[data-mode='dark'] {
-      @include custom-dark-scheme;
-    }
-
-    &[data-mode='light'] {
-      @include custom-light-scheme;
-    }
-  }
+  /* Tagy / štítky */
+  --tag-border: #{$yellow-light};
+  --tag-shadow: rgba(212, 160, 23, 0.4);
+  --tag-hover: rgba(212, 160, 23, 0.15);
 }
 
-/* CSS Class Overrides for things that don't use variables or use hardcoded colors */
+/* Tmavý režim – trochu světlejší žlutá, ať víc svítí na tmavém pozadí */
+html[data-mode='dark'] {
+  --link-color: #{$yellow-dark};
+  --toc-highlight: #{$yellow-dark};
+  --sidebar-active-color: #{$yellow-dark};
 
-.btn.btn-outline-primary {
-  color: var(--link-color);
-  border-color: var(--link-color);
-  
-  &:not(.disabled):hover {
-    background-color: var(--link-color);
-    border-color: var(--link-color);
-    color: #fff; /* White text on yellow background */
-  }
-}
-
-/* Fix for dark mode text on yellow background if needed */
-html[data-mode='dark'] .btn.btn-outline-primary:not(.disabled):hover {
-  color: #000; /* Black text on bright yellow */
-}
-
-/* Override hardcoded blue in some Chirpy components if they exist */
-::selection {
-  background: var(--link-color);
-  color: #fff;
+  --tag-border: #{$yellow-dark};
+  --tag-shadow: rgba(255, 215, 0, 0.45);
+  --tag-hover: rgba(255, 215, 0, 0.18);
 }

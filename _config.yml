@@ -29,7 +29,7 @@ github:
   username: LookAsPelc # change to your GitHub username
 
 twitter:
-  username:
+  username: _PeLc_
 
 social:
   # Change to your full name.
@@ -40,7 +40,7 @@ social:
     # The first element serves as the copyright owner's link
     - https://github.com/LookAsPelc
     # Uncomment below to add more social links
-    # - https://www.linkedin.com/in/username
+    - https://x.com/_PeLc_
 
 # Site Verification Settings
 webmaster_verifications:
@@ -146,6 +146,10 @@ pwa:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
 paginate: 10
+
+# RSS feed (jekyll-feed plugin je součástí GitHub Pages, RSS bude na /feed.xml)
+feed:
+  path: feed.xml
 
 # The base URL of your site
 baseurl: ""
