@@ -8,146 +8,406 @@ permalink: /404.html
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>404 - Not Found</title>
+  <title>404 · Not Found</title>
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg">
   <link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    .btn-404 {
+    :root {
+      --void-bg: #010409;
+      --void-gradient: radial-gradient(1200px 600px at 50% 25%, rgba(13, 20, 40, 0.9), rgba(3, 5, 10, 0.85)), linear-gradient(180deg, #05070f 0%, #010409 90%);
+      --gold: #ffd700;
+      --gold-deep: #d4a017;
+      --card-bg: rgba(8, 12, 24, 0.65);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--void-bg);
+      color: var(--text-main);
+      overflow: hidden;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: #0f172a;
+    }
+
+    .void-wrapper {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .void-gradient,
+    .glow-ring,
+    .void-stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .void-gradient {
+      background: var(--void-gradient);
+      opacity: 0.95;
+      z-index: 0;
+    }
+
+    .glow-ring {
+      width: min(70vw, 680px);
+      height: min(70vw, 680px);
+      margin: auto;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 0, 0.18);
+      filter: drop-shadow(0 0 45px rgba(255, 215, 0, 0.35));
+      z-index: 0;
+    }
+
+    .void-stars {
+      z-index: 1;
+    }
+
+    .void-core {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .numeral-stack {
+      position: relative;
+      display: inline-block;
+    }
+
+    .big-404 {
+      font-size: clamp(6rem, 18vw, 14rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin: 0;
+      line-height: 1;
+      background: linear-gradient(180deg, #fffbe6, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .nothingness {
+      position: absolute;
+      left: 50%;
+      top: 62%;
+      transform: translate(-50%, -50%);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.65em;
+      text-transform: uppercase;
+      font-size: clamp(0.75rem, 2vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.45);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+    }
+
+    .void-title {
+      font-size: clamp(1.65rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(90deg, #fff, #cbd5f5);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .void-lead {
+      margin: 0 auto;
+      max-width: 52ch;
+      color: var(--text-muted);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .quote-card {
+      margin: 0 auto;
+      width: min(480px, 90vw);
+      padding: 1.75rem 2rem;
+      border-radius: 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .quote-card blockquote {
+      margin: 0;
+      font-size: 1.1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--text-main);
+      transition: opacity 0.25s ease;
+    }
+
+    .quote-card .badge-icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 0.75rem auto;
+      border-radius: 50%;
+      background: rgba(255, 215, 0, 0.08);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .action-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
+      padding: 0.9rem 1.6rem;
+      border-radius: 14px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
+      border: 1px solid transparent;
       cursor: pointer;
+      transition: all 0.25s ease;
       text-decoration: none;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.12);
+      letter-spacing: 0.01em;
     }
-    .btn-return {
+
+    .action-btn svg {
+      width: 1.1rem;
+      height: 1.1rem;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .action-btn--primary {
       background: #ffffff;
       color: #0f172a;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
     }
-    .btn-return:hover {
-      background: #ffd700;
-      color: #000;
-      border-color: #ffd700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+
+    .action-btn--primary:hover {
+      background: var(--gold);
+      color: #0b0f1a;
+      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.35);
     }
-    .btn-oracle {
+
+    .action-btn--ghost {
+      background: rgba(15, 23, 42, 0.55);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .action-btn--ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(15, 23, 42, 0.75);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .icon-spin {
+      transition: transform 0.6s ease;
+    }
+
+    .icon-spin.is-spinning {
+      transform: rotate(-360deg);
+    }
+
+    .void-footer {
+      position: absolute;
+      bottom: clamp(1rem, 3vw, 2.5rem);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .footer-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
       background: rgba(15, 23, 42, 0.6);
-      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'IBM Plex Mono', monospace;
     }
-    .btn-oracle:hover {
-      border-color: #ffd700;
-      color: #ffd700;
-      background: rgba(15, 23, 42, 0.8);
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+
+    .footer-pill svg {
+      width: 0.9rem;
+      height: 0.9rem;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    @media (max-width: 600px) {
+      .nothingness {
+        letter-spacing: 0.4em;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
-<body style="margin:0;padding:0;overflow:hidden;height:100vh;width:100vw;background:#000;font-family:sans-serif;color:#e5e7eb;">
+<body>
+  <section class="void-wrapper" id="void">
+    <div class="void-gradient" data-parallax="2"></div>
+    <div class="glow-ring" data-parallax="4"></div>
+    <div id="stars" class="void-stars" data-parallax="6"></div>
 
-<section style="position:relative;height:100%;width:100%;display:grid;place-items:center;isolation:isolate;">
-  <div style="position:absolute;inset:0;background:radial-gradient(1200px 600px at 50% 30%, #0b0f1a, #000),linear-gradient(180deg, #0b1020, #000);opacity:0.95;z-index:-2;"></div>
-  <div id="stars" style="position:absolute;inset:0;pointer-events:none;z-index:-1;"></div>
+    <div class="void-core" data-parallax="3">
+      <div class="numeral-stack" data-parallax="8">
+        <h1 class="big-404">404</h1>
+        <span class="nothingness">NOTHINGNESS</span>
+      </div>
 
-  <div style="position:relative;z-index:2;text-align:center;padding:2rem;max-width:800px;">
-    <div style="position:relative;display:inline-block;margin-bottom:1rem;">
-      <span style="display:block;font-weight:900;line-height:1;letter-spacing:-0.04em;font-size:clamp(6rem,20vw,14rem);background:linear-gradient(180deg,#ffd700,#d4a017);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 30px rgba(255,215,0,0.35));">404</span>
-      <span style="position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:clamp(0.8rem,2vw,1.2rem);letter-spacing:0.5em;text-transform:uppercase;color:rgba(255,215,0,0.3);filter:blur(0.5px);white-space:nowrap;">NOTHINGNESS</span>
+      <h2 class="void-title" data-parallax="5">Reality Glitch Detected</h2>
+      <p class="void-lead" data-parallax="4">
+        Narazil jsi na vakuum. Prohledali jsme servery, databáze i kolektivní nevědomí, ale stránka, kterou hledáš,
+        v tomhle vesmíru prostě neexistuje.
+      </p>
+
+      <div class="quote-card" data-parallax="6">
+        <div class="badge-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" opacity="0.4"></circle>
+            <path d="M12 6v6l3 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <blockquote id="quote"></blockquote>
+      </div>
+
+      <div class="actions" data-parallax="5">
+        <a href="/" class="action-btn action-btn--primary" id="home-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M5 9.5V21h5.5v-5.5h3V21H19V9.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          Return to Reality
+        </a>
+        <button id="oracle" type="button" class="action-btn action-btn--ghost">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-spin" id="oracle-icon">
+            <path d="M21 12a9 9 0 1 0-3 6.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M21 16v-4h-4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          Consult the Oracle
+        </button>
+      </div>
     </div>
 
-    <h2 style="font-weight:800;font-size:clamp(1.5rem,4vw,2.5rem);margin:0.5rem 0 1rem;background:linear-gradient(to right,#fff,#cbd5e1);-webkit-background-clip:text;background-clip:text;color:transparent;">Reality Glitch Detected</h2>
+    <footer class="void-footer" data-parallax="1">
+      <div class="footer-pill">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M21 21l-4.3-4.3"></path>
+        </svg>
+        Searching for meaning... since 1970 (Unix Epoch)
+      </div>
+    </footer>
+  </section>
 
-    <p style="max-width:50ch;margin:0 auto 2rem;color:#94a3b8;font-size:clamp(1rem,2vw,1.2rem);line-height:1.6;font-weight:300;">
-      You've reached the void. We searched the servers, the database, and the collective unconscious, 
-      but the page you are looking for does not exist in this dimension.
-    </p>
+  <script>
+    const quotes = [
+      'The page you are looking for is merely a social construct.',
+      'I think, therefore I am... 404.',
+      'Not all who wander are lost. But you? You definitely are.',
+      'We found the Answer (42), but we lost the Question (URL).',
+      'The unexamined URL is not worth visiting.',
+      'This page has ascended to a higher plane of existence.',
+      'Error 404: Meaning of Life not found. Try coffee instead.',
+      'Maybe the real page was the friends we made along the way.',
+      'You can\'t step into the same 404 page twice.',
+      'If a tree falls in a forest and no one hears it, does it make a 404?',
+      'There is no spoon. There is no page.',
+      'Have you tried turning the universe off and on again?'
+    ];
 
-    <div style="max-width:40rem;margin:0 auto 2.5rem;padding:1.5rem 2rem;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);box-shadow:0 4px 30px rgba(0,0,0,0.1);">
-      <div style="font-size:1.5rem;margin-bottom:0.5rem;display:block;filter:grayscale(0.5);">🧭</div>
-      <blockquote id="quote" style="font-style:italic;font-size:clamp(1rem,1.5vw,1.15rem);color:#e2e8f0;font-family:serif;margin:0;"></blockquote>
-    </div>
+    const starsLayer = document.getElementById('stars');
+    const quoteEl = document.getElementById('quote');
+    const oracleBtn = document.getElementById('oracle');
+    const oracleIcon = document.getElementById('oracle-icon');
+    const wrapper = document.getElementById('void');
+    const parallaxItems = document.querySelectorAll('[data-parallax]');
 
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:1rem;">
-      <a href="/" class="btn-404 btn-return">Return to Reality</a>
-      <button id="oracle" type="button" class="btn-404 btn-oracle">↻ Consult the Oracle</button>
-    </div>
-
-    <footer style="opacity:0.4;font-size:0.8rem;pointer-events:none;margin-top:2rem;">Searching for meaning... since 1970 (Unix Epoch)</footer>
-  </div>
-</section>
-
-<script>
-  const quotes = [
-    "The page you are looking for is merely a social construct.",
-    "I think, therefore I am... 404.",
-    "Not all who wander are lost. But you? You definitely are.",
-    "We found the Answer (42), but we lost the Question (URL).",
-    "The unexamined URL is not worth visiting.",
-    "This page has ascended to a higher plane of existence.",
-    "Error 404: Meaning of Life not found. Try coffee instead.",
-    "Maybe the real page was the friends we made along the way.",
-    "If a tree falls in a forest and no one is around to hear it, does it make a 404 error?",
-    "You can't step into the same 404 page twice.",
-    "To err is human; to really foul things up requires a computer.",
-    "There is no spoon. There is no page.",
-    "Have you tried turning the universe off and on again?"
-  ];
-
-  const starsLayer = document.getElementById('stars');
-  const quoteEl = document.getElementById('quote');
-  const oracleBtn = document.getElementById('oracle');
-  const container = document.querySelector('section');
-
-  function setRandomQuote() {
-    const q = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteEl.style.opacity = 0;
-    setTimeout(() => {
-      quoteEl.textContent = '"' + q + '"';
-      quoteEl.style.opacity = 1;
-    }, 200);
-  }
-  quoteEl.style.transition = 'opacity 0.2s ease';
-  setRandomQuote();
-
-  function makeStars(n = 80) {
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < n; i++) {
-      const s = document.createElement('div');
-      const size = Math.random() * 2 + 1;
-      s.style.cssText = `position:absolute;background:white;border-radius:50%;width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:0.3;animation:twinkle ${(Math.random()*3+2).toFixed(2)}s ease-in-out infinite;`;
-      frag.appendChild(s);
+    function setRandomQuote() {
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteEl.style.opacity = 0;
+      setTimeout(() => {
+        quoteEl.textContent = '"' + q + '"';
+        quoteEl.style.opacity = 1;
+      }, 150);
     }
-    starsLayer.innerHTML = '';
-    starsLayer.appendChild(frag);
-    const style = document.createElement('style');
-    style.textContent = '@keyframes twinkle { 0%,100% { opacity:0.2;transform:scale(0.8); } 50% { opacity:0.8;transform:scale(1.2); } }';
-    document.head.appendChild(style);
-  }
-  makeStars(80);
 
-  container.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
-    starsLayer.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
-    container.querySelector('div:nth-of-type(3)').style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
-  });
+    function makeStars(n = 100) {
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('span');
+        const size = Math.random() * 2.2 + 0.8;
+        s.style.cssText = `position:absolute;background:white;border-radius:50%;width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*0.4+0.2};animation:twinkle ${(Math.random()*3+2).toFixed(2)}s ease-in-out infinite ${Math.random().toFixed(2)}s;`;
+        frag.appendChild(s);
+      }
+      starsLayer.innerHTML = '';
+      starsLayer.appendChild(frag);
+    }
 
-  oracleBtn.addEventListener('click', () => {
-    oracleBtn.style.transition = 'transform 0.5s ease';
-    oracleBtn.style.transform = 'rotate(360deg)';
-    setTimeout(() => {
-      oracleBtn.style.transition = 'none';
-      oracleBtn.style.transform = 'rotate(0deg)';
-    }, 500);
+    function handleParallax(e) {
+      const rect = wrapper.getBoundingClientRect();
+      const relX = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const relY = (e.clientY - rect.top - rect.height / 2) / rect.height;
+
+      window.requestAnimationFrame(() => {
+        parallaxItems.forEach((item) => {
+          const depth = parseFloat(item.dataset.parallax) || 0;
+          item.style.transform = `translate3d(${relX * depth * 12}px, ${relY * depth * 12}px, 0)`;
+        });
+      });
+    }
+
+    quoteEl.style.opacity = 0;
     setRandomQuote();
-  });
-</script>
+    makeStars();
+
+    wrapper.addEventListener('mousemove', handleParallax);
+
+    oracleBtn.addEventListener('click', () => {
+      oracleIcon.classList.add('is-spinning');
+      setRandomQuote();
+      setTimeout(() => oracleIcon.classList.remove('is-spinning'), 600);
+    });
+
+    const twinkleStyle = document.createElement('style');
+    twinkleStyle.textContent = '@keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.85); } 50% { opacity: 0.9; transform: scale(1.1); } }';
+    document.head.appendChild(twinkleStyle);
+  </script>
 
 </body>
 </html>

@@ -28,6 +28,8 @@ html {
 
       /* Tagy - pouze hover barvy, default nechat na šabloně */
       --tag-hover: rgba(212, 160, 23, 0.15);
+      --tag-text-rest: #475467;
+      --tag-border-rest: rgba(15, 23, 42, 0.18);
     }
 
     &[data-mode='dark'] {
@@ -39,6 +41,8 @@ html {
       --btn-share-hover-color: #ffd700;
 
       --tag-hover: rgba(229, 199, 95, 0.15);
+      --tag-text-rest: #f1f5f9;
+      --tag-border-rest: rgba(255, 255, 255, 0.18);
     }
   }
 
@@ -53,6 +57,8 @@ html {
       --btn-share-hover-color: #ffd700;
 
       --tag-hover: rgba(229, 199, 95, 0.15);
+      --tag-text-rest: #f1f5f9;
+      --tag-border-rest: rgba(255, 255, 255, 0.18);
     }
 
     &[data-mode='light'] {
@@ -64,6 +70,8 @@ html {
       --btn-share-hover-color: #d4a017;
 
       --tag-hover: rgba(212, 160, 23, 0.15);
+      --tag-text-rest: #475467;
+      --tag-border-rest: rgba(15, 23, 42, 0.18);
     }
   }
 }
@@ -90,12 +98,24 @@ a:hover {
 }
 
 /* 2. Oprava modrých tagů (Trending Tags) */
-/* Defaultní stav necháme na šabloně (šedá), upravíme jen hover */
+/* defaultní vzhled -> šedá, hover -> žlutý highlight */
+
+.tag,
+.post-tag {
+  border-color: var(--tag-border-rest) !important;
+  background-color: transparent;
+  color: var(--tag-text-rest) !important;
+}
+
+.post-tag:link,
+.post-tag:visited {
+  color: var(--tag-text-rest) !important;
+}
 
 .tag:hover, .post-tag:hover {
   background-color: var(--tag-hover) !important;
   border-color: var(--link-color) !important;
-  color: var(--link-color) !important;
+  color: #0f172a !important;
 }
 
 /* 3. Oprava modrých tlačítek (Bootstrap overrides) */
