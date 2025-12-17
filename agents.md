@@ -28,16 +28,19 @@ Hlavní cílový uživatel je **Lukáš**, píše česky, URL používá anglick
 
 ## 3. Jak AI může pomáhat
 
-### 3.1 Nové články
+### 3.1 Drafty a workflow pro nové články
 
-- Umí vytvořit nový post ve `_posts/`:
-  - správný název souboru `YYYY-MM-DD-slug.md`,
-  - doplnit `front matter` (title, date, categories, tags),
-  - navrhnout základní strukturu (úvod, sekce, shrnutí, odkazy).
-- Při převodu z nějakého zdrojového textu (např. `*.md` v rootu):
-  - zachovat obsah,
-  - doplnit nadpisy, TOC-friendly strukturu a shrnutí,
-  - učesat konec textu (shrnutí, „co dál“, odkazy).
+- **Složka `_drafts/`** slouží pro surové, rozepsané nebo sdílené texty.
+  - Lukáš sem ukládá soubory typu `napad.md`, `poznamky.md` atd.
+  - Nejsou publikované (nejsou v `_posts/`), takže lze commitovat i rozpracované verze.
+- **Workflow:**
+  1. Lukáš dá text do `_drafts/` (nebo jen sdílí obsah).
+  2. AI převede draft do finálního postu v `_posts/`:
+     - správný název souboru `YYYY-MM-DD-slug.md`,
+     - doplnit `front matter` (title, date, categories, tags),
+     - navrhnout strukturu (úvod, sekce, shrnutí, odkazy),
+     - učesat text (nadpisy, odstavce, TOC-friendly formát).
+  3. Draft lze po publikování smazat nebo ponechat pro historii.
 
 ### 3.2 Úpravy existujícího obsahu
 

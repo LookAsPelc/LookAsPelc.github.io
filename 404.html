@@ -1,0 +1,263 @@
+---
+layout: page
+title: 404
+permalink: /404.html
+---
+
+<section class="existential-404" aria-labelledby="nf-title">
+  <div class="bg"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <div class="content">
+    <div class="big-404" role="img" aria-label="404">
+      <span class="digits">404</span>
+      <span class="subtle">nicota</span>
+    </div>
+
+    <h2 id="nf-title" class="headline">Realita se na chvíli ztratila</h2>
+
+    <p class="lead">
+      Hledali jsme na serveru, v databázi i v kolektivním nevědomí —
+      ale stránka, kterou hledáš, v tomhle vesmíru neexistuje.
+    </p>
+
+    <figure class="quote-card">
+      <figcaption class="icon" aria-hidden="true">🧭</figcaption>
+      <blockquote id="nf-quote" class="quote"></blockquote>
+    </figure>
+
+    <div class="actions">
+      <a class="btn primary" href="/" aria-label="Zpět na úvod">Zpět do reality</a>
+      <button class="btn" id="nf-oracle" type="button" aria-label="Získat jiný citát">Poradit se s oráklem</button>
+    </div>
+
+    <footer class="footnote" aria-hidden="true">Hledám smysl… od 1970 (Unix Epoch)</footer>
+  </div>
+</section>
+
+<style>
+  :root {
+    --bg-start: #0b1020;
+    --bg-mid: #0b0f1a;
+    --bg-end: #000000;
+    --accent-1: #a78bfa; /* purple-400 */
+    --accent-2: #60a5fa; /* blue-400 */
+    --text: #e5e7eb;     /* slate-200 */
+    --muted: #94a3b8;    /* slate-400 */
+    --card: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.12);
+  }
+
+  .existential-404 {
+    position: relative;
+    min-height: 75vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 12px;
+    isolation: isolate;
+  }
+
+  .existential-404 .bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(1200px 600px at 50% 30%, var(--bg-mid), var(--bg-end)),
+                radial-gradient(800px 400px at 20% 80%, #0c1430, transparent),
+                linear-gradient(180deg, var(--bg-start), var(--bg-end));
+    opacity: 0.95;
+  }
+
+  .existential-404 .stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .existential-404 .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    color: var(--text);
+  }
+
+  .big-404 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .big-404 .digits {
+    display: block;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-size: clamp(5rem, 15vw, 12rem);
+    background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 10px 30px rgba(96,165,250,0.35));
+  }
+  .big-404 .subtle {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(0.9rem, 3vw, 1.4rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(147,197,253,0.3);
+    filter: blur(0.7px);
+  }
+
+  .headline {
+    font-weight: 800;
+    font-size: clamp(1.25rem, 3.5vw, 2.25rem);
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .lead {
+    max-width: 60ch;
+    margin: 0 auto 1.25rem;
+    color: var(--muted);
+    font-size: clamp(1rem, 2.6vw, 1.25rem);
+    line-height: 1.7;
+  }
+
+  .quote-card {
+    max-width: 50rem;
+    margin: 1rem auto 1.5rem;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    backdrop-filter: blur(6px);
+  }
+  .quote-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    color: var(--accent-1);
+  }
+  .quote {
+    font-style: italic;
+    font-size: clamp(1rem, 2.6vw, 1.25rem);
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+    max-width: 28rem;
+    margin: 0.75rem auto 0;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0f172a;
+    color: var(--text);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary {
+    background: #ffffff;
+    color: #0b1020;
+    box-shadow: 0 0 20px rgba(255,255,255,0.25);
+  }
+  .btn.primary:hover {
+    background: #f5f3ff;
+    box-shadow: 0 0 26px rgba(255,255,255,0.35);
+  }
+
+  .footnote {
+    opacity: 0.6;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  /* Stars */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.9; }
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 999px;
+    opacity: 0.35;
+    animation: twinkle var(--twinkle, 3s) ease-in-out infinite;
+  }
+
+  /* Responsive tweaks inside theme container */
+  @media (max-width: 560px) {
+    .actions { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  (function () {
+    const quotes = [
+      "Stránka, kterou hledáš, je jen sociální konstrukt.",
+      "Myslím, tedy jsem… 404.",
+      "Ne všichni, kdo bloudí, jsou ztraceni. Ty? Trochu jo.",
+      "Našli jsme Odpověď (42), ale ztratili Otázku (URL).",
+      "Neprozkoumané URL nestojí za návštěvu.",
+      "Tahle stránka povýšila do vyšší dimenze.",
+      "Chyba 404: Smysl života nenalezen. Zkus kafe.",
+      "Možná byl opravdový web přátelství, které jsme cestou získali."
+    ];
+
+    const container = document.querySelector('.existential-404');
+    const starsLayer = container.querySelector('.stars');
+    const quoteEl = document.getElementById('nf-quote');
+    const oracleBtn = document.getElementById('nf-oracle');
+
+    // Initialize quote
+    function setRandomQuote() {
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteEl.textContent = '"' + q + '"';
+    }
+    setRandomQuote();
+
+    // Generate stars
+    function makeStars(n = 50) {
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('div');
+        const size = Math.random() * 2.5 + 0.8; // 0.8–3.3px
+        s.className = 'star';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.setProperty('--twinkle', (Math.random() * 2 + 2).toFixed(2) + 's');
+        frag.appendChild(s);
+      }
+      starsLayer.innerHTML = '';
+      starsLayer.appendChild(frag);
+    }
+    makeStars(70);
+
+    // Parallax: subtle translate on mouse move
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX - (rect.left + rect.width / 2)) / 60;
+      const y = (e.clientY - (rect.top + rect.height / 2)) / 60;
+      starsLayer.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
+      container.querySelector('.content').style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Quote refresh
+    oracleBtn.addEventListener('click', () => {
+      oracleBtn.style.transform = 'rotate(5deg)';
+      setTimeout(() => (oracleBtn.style.transform = ''), 180);
+      setRandomQuote();
+    });
+  })();
+</script>
