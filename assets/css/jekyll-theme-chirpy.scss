@@ -26,10 +26,8 @@ html {
       --checkbox-checked-color: #d4a017;
       --btn-share-hover-color: #d4a017;
 
-      /* Tagy */
-      --tag-border: #d4a017;
-      --tag-shadow: rgba(212, 160, 23, 0.25);
-      --tag-hover: rgba(212, 160, 23, 0.08);
+      /* Tagy - pouze hover barvy, default nechat na šabloně */
+      --tag-hover: rgba(212, 160, 23, 0.15);
     }
 
     &[data-mode='dark'] {
@@ -40,9 +38,7 @@ html {
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
 
-      --tag-border: #e5c75f;
-      --tag-shadow: rgba(229, 199, 95, 0.25);
-      --tag-hover: rgba(229, 199, 95, 0.08);
+      --tag-hover: rgba(229, 199, 95, 0.15);
     }
   }
 
@@ -56,9 +52,7 @@ html {
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
 
-      --tag-border: #e5c75f;
-      --tag-shadow: rgba(229, 199, 95, 0.25);
-      --tag-hover: rgba(229, 199, 95, 0.08);
+      --tag-hover: rgba(229, 199, 95, 0.15);
     }
 
     &[data-mode='light'] {
@@ -69,9 +63,7 @@ html {
       --checkbox-checked-color: #d4a017;
       --btn-share-hover-color: #d4a017;
 
-      --tag-border: #d4a017;
-      --tag-shadow: rgba(212, 160, 23, 0.25);
-      --tag-hover: rgba(212, 160, 23, 0.08);
+      --tag-hover: rgba(212, 160, 23, 0.15);
     }
   }
 }
@@ -98,34 +90,29 @@ a:hover {
 }
 
 /* 2. Oprava modrých tagů (Trending Tags) */
-.tag, .post-tag {
-  border-color: var(--tag-border) !important;
-  color: var(--link-color) !important; /* Vynutit barvu textu */
-}
+/* Defaultní stav necháme na šabloně (šedá), upravíme jen hover */
 
 .tag:hover, .post-tag:hover {
   background-color: var(--tag-hover) !important;
-  border-color: var(--tag-border) !important;
+  border-color: var(--link-color) !important;
   color: var(--link-color) !important;
 }
 
 /* 3. Oprava modrých tlačítek (Bootstrap overrides) */
+/* Defaultní stav necháme být (outline), upravíme jen hover a active */
+
 .btn-outline-primary {
-  --bs-btn-color: var(--link-color);
-  --bs-btn-border-color: var(--link-color);
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: var(--link-color);
   --bs-btn-hover-border-color: var(--link-color);
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: var(--link-color);
   --bs-btn-active-border-color: var(--link-color);
-  
-  color: var(--link-color) !important;
-  border-color: var(--link-color) !important;
 }
 
 .btn-outline-primary:hover {
   background-color: var(--link-color) !important;
+  border-color: var(--link-color) !important;
   color: #fff !important;
 }
 
