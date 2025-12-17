@@ -28,8 +28,8 @@ html {
 
       /* Tagy */
       --tag-border: #d4a017;
-      --tag-shadow: rgba(212, 160, 23, 0.3);
-      --tag-hover: rgba(212, 160, 23, 0.15);
+      --tag-shadow: rgba(212, 160, 23, 0.25);
+      --tag-hover: rgba(212, 160, 23, 0.08);
     }
 
     &[data-mode='dark'] {
@@ -40,9 +40,9 @@ html {
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
 
-      --tag-border: #ffd700;
-      --tag-shadow: rgba(255, 215, 0, 0.4);
-      --tag-hover: rgba(255, 215, 0, 0.15);
+      --tag-border: #e5c75f;
+      --tag-shadow: rgba(229, 199, 95, 0.25);
+      --tag-hover: rgba(229, 199, 95, 0.08);
     }
   }
 
@@ -56,9 +56,9 @@ html {
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
 
-      --tag-border: #ffd700;
-      --tag-shadow: rgba(255, 215, 0, 0.4);
-      --tag-hover: rgba(255, 215, 0, 0.15);
+      --tag-border: #e5c75f;
+      --tag-shadow: rgba(229, 199, 95, 0.25);
+      --tag-hover: rgba(229, 199, 95, 0.08);
     }
 
     &[data-mode='light'] {
@@ -70,8 +70,8 @@ html {
       --btn-share-hover-color: #d4a017;
 
       --tag-border: #d4a017;
-      --tag-shadow: rgba(212, 160, 23, 0.3);
-      --tag-hover: rgba(212, 160, 23, 0.15);
+      --tag-shadow: rgba(212, 160, 23, 0.25);
+      --tag-hover: rgba(212, 160, 23, 0.08);
     }
   }
 }
@@ -82,6 +82,11 @@ html {
  */
 
 /* 1. Oprava oranžových odkazů (Recently Updated, atd.) */
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
 a:hover {
   color: var(--link-color) !important;
   border-bottom-color: var(--link-color) !important;

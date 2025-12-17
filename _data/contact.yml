@@ -1,0 +1,8 @@
+- type: github
+  icon: 'fab fa-github'
+
+- type: twitter
+  icon: 'fab fa-x-twitter'
+
+- type: rss
+  icon: 'fas fa-rss'
