@@ -12,120 +12,107 @@
 
 /*
  * Žluté téma (zlaté odstíny)
- * Přepisuje vybrané barvy z _sass/themes/_light.scss a _dark.scss
+ * Přepisuje vybrané CSS proměnné z _sass/themes/_light.scss a _dark.scss
+ * podle oficiálního Chirpy theming systému.
  */
 
 html {
   @media (prefers-color-scheme: light) {
     &:not([data-mode]),
     &[data-mode='light'] {
-      /* Light mode – tmavší zlatá, aby byla čitelná na bílém */
+      /* Light mode – tmavší zlatá pro čitelnost na bílém */
       --link-color: #d4a017;
       --toc-highlight: #d4a017;
       --sidebar-active-color: #d4a017;
       --checkbox-checked-color: #d4a017;
       --btn-share-hover-color: #d4a017;
-
-      /* Tagy - pouze hover barvy, default nechat na šabloně */
-      // --tag-hover: rgba(212, 160, 23, 0.15);
-      --tag-text-rest: #475467;
-      --tag-border-rest: rgba(15, 23, 42, 0.18);
+      
+      /* Tag hover – světlá žlutá s transparencí */
+      --tag-hover: rgba(212, 160, 23, 0.2);
     }
 
     &[data-mode='dark'] {
-      /* Dark mode (když je přepnuto ručně i v light prefers-color-scheme) */
+      /* Dark mode (ručně přepnuto v light mode) */
       --link-color: #ffd700;
       --toc-highlight: #ffd700;
       --sidebar-active-color: #ffd700;
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
-
-      // --tag-hover: rgba(229, 199, 95, 0.15);
-      --tag-text-rest: #f1f5f9;
-      --tag-border-rest: rgba(255, 255, 255, 0.18);
+      
+      /* Tag hover – zářivá žlutá s vyšší saturací */
+      --tag-hover: rgba(255, 215, 0, 0.25);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     &:not([data-mode]),
     &[data-mode='dark'] {
-      /* Dark mode – jasná žlutá, ať svítí na tmavém */
+      /* Dark mode – jasná žlutá svítí na tmavém pozadí */
       --link-color: #ffd700;
       --toc-highlight: #ffd700;
       --sidebar-active-color: #ffd700;
       --checkbox-checked-color: #ffd700;
       --btn-share-hover-color: #ffd700;
-
-      // --tag-hover: rgba(229, 199, 95, 0.15);
-      --tag-text-rest: #f1f5f9;
-      --tag-border-rest: rgba(255, 255, 255, 0.18);
+      
+      /* Tag hover – zářivá žlutá */
+      --tag-hover: rgba(255, 215, 0, 0.25);
     }
 
     &[data-mode='light'] {
-      /* Light mode (když je přepnuto ručně i v dark prefers-color-scheme) */
+      /* Light mode (ručně přepnuto v dark mode) */
       --link-color: #d4a017;
       --toc-highlight: #d4a017;
       --sidebar-active-color: #d4a017;
       --checkbox-checked-color: #d4a017;
       --btn-share-hover-color: #d4a017;
-
-      // --tag-hover: rgba(212, 160, 23, 0.15);
-      --tag-text-rest: #475467;
-      --tag-border-rest: rgba(15, 23, 42, 0.18);
+      
+      /* Tag hover – světlá žlutá */
+      --tag-hover: rgba(212, 160, 23, 0.2);
     }
   }
 }
 
 /* 
- * Opravy specifických elementů, které nepoužívají proměnné 
- * nebo mají hardcoded barvy v šabloně.
+ * Přepisy pro elementy s hardcoded barvami v Chirpy.
+ * Respektuje placeholder systém šablony.
  */
 
-/* 1. Oprava oranžových odkazů (Recently Updated, atd.) */
-a:link,
-a:visited {
-  color: var(--link-color);
-}
-
+/* 1. Fix pro oranžový %link-hover placeholder (#d2603a) */
 a:hover {
   color: var(--link-color) !important;
   border-bottom-color: var(--link-color) !important;
 }
 
-#access-lastmod a:hover {
-  color: var(--link-color) !important;
-  border-bottom: none;
+a:visited {
+  color: var(--link-color);
 }
 
-/* 2. Oprava modrých tagů (Trending Tags) */
-/* defaultní vzhled -> šedá, hover -> žlutý highlight */
+/* 2. Pills (tagy) – fix kontrastnosti textu na žlutém hover pozadí */
+/* Placeholder %tag-hover používá var(--tag-hover) pro background,
+   ale text color musíme přidat explicitně podle mode. */
 
-.tag,
-.post-tag {
-  border-color: var(--tag-border-rest) !important;
-  background-color: transparent;
-  color: var(--tag-text-rest) !important;
-}
-
-.post-tag:link,
-.post-tag:visited {
-  color: var(--tag-text-rest) !important;
-}
-
-.tag:hover, .post-tag:hover {
-  background-color: var(--tag-hover) !important;
-  border-color: var(--link-color) !important;
+.tag:hover,
+.post-tag:hover {
+  /* V light mode černý text na žluté */
   color: #0f172a !important;
 }
 
-/* 3. Oprava modrých tlačítek (Bootstrap overrides) */
-/* Defaultní stav necháme být (outline), upravíme jen hover a active */
+/* V dark mode také černý text kvůli kontrastu se zářivě žlutou */
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode='light']) {
+    .tag:hover,
+    .post-tag:hover {
+      color: #0f172a !important;
+    }
+  }
+}
 
+/* 3. Bootstrap tlačítka – žluté místo modrých */
 .btn-outline-primary {
-  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-color: #000;
   --bs-btn-hover-bg: var(--link-color);
   --bs-btn-hover-border-color: var(--link-color);
-  --bs-btn-active-color: #fff;
+  --bs-btn-active-color: #000;
   --bs-btn-active-bg: var(--link-color);
   --bs-btn-active-border-color: var(--link-color);
 }
@@ -133,15 +120,10 @@ a:hover {
 .btn-outline-primary:hover {
   background-color: var(--link-color) !important;
   border-color: var(--link-color) !important;
-  color: #fff !important;
-}
-
-/* Tmavý režim - černý text na žlutém tlačítku pro lepší kontrast */
-html[data-mode='dark'] .btn-outline-primary:hover {
   color: #000 !important;
 }
 
-/* 4. Oprava výběru textu (modrá -> žlutá) */
+/* 4. Text selection – žlutý highlight */
 ::selection {
   background: var(--link-color);
   color: #000;
