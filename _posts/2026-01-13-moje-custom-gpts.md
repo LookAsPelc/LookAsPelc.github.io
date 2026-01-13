@@ -5,7 +5,7 @@ categories: [AI]
 tags: [chatgpt, nastroje, portu, asistent]
 ---
 
-ChatGPT není jen o psaní textů do prázdného okna. Vlastní (custom) GPTs jsou specializované asistenty, které si můžeš vytvořit přesně na míru tomu, co potřebuješ řešit často. Každý z nich má svou vlastní logiku, instrukce a někdy i přístup k externím datům.
+Modely (custom) GPTs od OpenAI jsou specializovaní asistenti, které si můžeš vytvořit přesně na míru tomu, co potřebuješ řešit často. Každý z nich má svou vlastní logiku, instrukce a někdy i přístup k externím datům.
 
 Tady je seznam mých veřejně dostupných custom GPTs, které můžeš vyzkoušet:
 
@@ -16,9 +16,9 @@ Tady je seznam mých veřejně dostupných custom GPTs, které můžeš vyzkouš
 Tento GPT je postaven jako asistent pro svět Jad Dračák – pomáhá s tvorbou kouzel, příběhů a světa fantasy. Pokud píšeš vlastní fantasy, nebo jen chceš zažít interaktivní průvodce smyšleným univerzem, tohle je tvůj magický pomocník.
 
 **Co umí:**
-- Navrhuje kouzla a jejich mechaniky
-- Radí s budováním světa (geografie, magie, kultury)
-- Diskutuje o fantasy tématech v kontextu konkrétního světa
+- Umí pravidla...
+- Zná všechna povolání, rasy a kouzla...
+- Vý jak vybrat tu správnou postavu zrvna pro tebe.
 
 ---
 
@@ -26,12 +26,12 @@ Tento GPT je postaven jako asistent pro svět Jad Dračák – pomáhá s tvorbo
 
 **Link:** [Portu](https://chatgpt.com/g/g-INpxrZOEu-portu)
 
-Portu je můj osobní finanční asistent zaměřený na **portfolio management** a investiční strategie. Pokud řešíš DCA, ETF, nebo jen chceš probrat správu dlouhodobých investic, Portu ti pomůže s analýzou a plánováním.
+Portu je moje reklama pro Portu ...a pro používání me referal linku. 😶 Pokud řešíš investice ale řešit to vlastně nechceš, nech se vést.
 
 **Co umí:**
-- Radí s nastavením investičního portfolia
-- Vysvětluje principy DCA (Dollar Cost Averaging)
-- Diskutuje o diverzifikaci a risk managementu
+- Radí se založením účtu
+- Zná spoustu věcí o Portu a co neví, ví kde dohledat
+- Neumí být pasivní, ale aktivně ti pomáhá s pasivním investováním.
 
 > 💡 **Souvisí s:** Pokud tě zajímá, jak investuji já, mrkni na [Jak na investice](/posts/jak-na-investice/).
 
@@ -41,12 +41,10 @@ Portu je můj osobní finanční asistent zaměřený na **portfolio management*
 
 **Link:** [Růžový rádce](https://chatgpt.com/g/g-DQQMt5e7v-ruzovy-radce)
 
-Růžový rádce je empatie-first asistent – není tady na to, aby ti rychle vyřešil problém, ale aby si s tebou promluvil, naslouchal a pomohl ti promyslet situaci z různých úhlů. Někdy stačí jen vyjádřit, co máš na srdci, a Růžový rádce ti vytvoří prostor.
+Růžový rádce je taky reklama. Reklama na Růžovou školu Manželů Pelcových... Ale ne jen. Ví kde hledat a jak vybírat růže.
 
 **Co umí:**
-- Aktivně naslouchá a ptá se
-- Pomáhá s rozhodováním skrze dialog
-- Nebere ti zodpovědnost, ale provází tě procesem
+- Nacpat ti růže z našeho webu a zasadit pod okny.
 
 ---
 
