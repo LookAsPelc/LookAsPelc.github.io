@@ -5,15 +5,20 @@ categories: [AI]
 tags: [chatgpt, OpenAI, portu, asistent]
 ---
 
-Modely (custom) GPTs od OpenAI jsou specializovaní asistenti, které si můžeš vytvořit přesně na míru tomu, co potřebuješ řešit často. Každý z nich má svou vlastní logiku, instrukce a někdy i přístup k externím datům.
+Modely GPT od OpenAI jsou prostě jen napromptovaní asistenti. Jejich výhoda je, že se dají volat z normálních chatů (i z projektů) pomocí @.
+
+Mohou mít vlastní soubory a dokonce i definované volání vlastních funkcí (API callů). To otevírá spoustu možností, jak si vytvořit vlastní nástroje, které ti pomohou s konkrétními úkoly.
+
+Takže můžeš mít například projekt na DnD, kde budeš mít informace o tvé postavě, ale zároveň tam nechceš mít kompletní dokumentaci všech pravidel, poválí atd. Jen by ho to mátlo. Místo toho si vytvoříš custom GPT, který bude mít přístup k těmto pravidlům a bude ti je umět vysvětlit, když to budeš potřebovat. Super je to, že můžeš zakládat normální konverzace a z nich volat konkrétní asistenty dle libosti, stejně jako okdyž označuješ lidi například v hromadné konverzaci Fb Messenegru.
+
 
 Tady je seznam mých veřejně dostupných custom GPTs, které můžeš vyzkoušet:
 
-## 🧙 Spellolog – asistent Jad Dračák
+## 🧙 Spellolog – asistent pro dračák
 
 **Link:** [Spellolog](https://chatgpt.com/g/g-luaWH9HyN-spellolog-asistent-jad-dracak)
 
-Tento GPT je postaven jako asistent pro svět Jad Dračák – pomáhá s tvorbou kouzel, příběhů a světa fantasy. Pokud píšeš vlastní fantasy, nebo jen chceš zažít interaktivní průvodce smyšleným univerzem, tohle je tvůj magický pomocník.
+Tento GPT je postaven jako uvaděč do českého světa českého překladu DnD.
 
 **Co umí:**
 - Umí pravidla...
@@ -26,14 +31,14 @@ Tento GPT je postaven jako asistent pro svět Jad Dračák – pomáhá s tvorbo
 
 **Link:** [Portu](https://chatgpt.com/g/g-INpxrZOEu-portu)
 
-Portu je moje reklama pro Portu ...a pro používání me referal linku. 😶 Pokud řešíš investice ale řešit to vlastně nechceš, nech se vést.
+Portu asistent je moje reklama pro Portu ...a pro používání mého referal linku. 😶 Pokud řešíš investice ale řešit to vlastně nechceš, nech se vést.
 
 **Co umí:**
 - Radí se založením účtu
 - Zná spoustu věcí o Portu a co neví, ví kde dohledat
 - Neumí být pasivní, ale aktivně ti pomáhá s pasivním investováním.
 
-> 💡 **Souvisí s:** Pokud tě zajímá, jak investuji já, mrkni na [Jak na investice]({% post_url 2024-12-11-jak-na-investice %}).
+> 💡 **Souvisí s:** Pokud tě zajímá, jak přemýšlím o správě majetku, mrkni na [Jak na investice]({% post_url 2024-12-11-jak-na-investice %}).
 
 ---
 
@@ -43,8 +48,8 @@ Portu je moje reklama pro Portu ...a pro používání me referal linku. 😶 Po
 
 Růžový rádce je taky reklama. Reklama na Růžovou školu Manželů Pelcových... Ale ne jen. Ví kde hledat a jak vybírat růže.
 
-**Co umí:**
-- Nacpat ti růže z našeho webu a zasadit pod okny.
+**Co neumí:**
+- Nacpat ti růže z našeho webu a zasadit pod okny ...ale chtěl by.
 
 ---
 
