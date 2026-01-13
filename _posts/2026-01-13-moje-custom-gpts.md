@@ -2,7 +2,7 @@
 title: "Moje Custom GPTs – nástroje, které používám"
 date: 2026-01-13 10:00:00 +0000
 categories: [AI]
-tags: [chatgpt, nastroje, portu, asistent]
+tags: [chatgpt, OpenAI, portu, asistent]
 ---
 
 Modely (custom) GPTs od OpenAI jsou specializovaní asistenti, které si můžeš vytvořit přesně na míru tomu, co potřebuješ řešit často. Každý z nich má svou vlastní logiku, instrukce a někdy i přístup k externím datům.
@@ -33,7 +33,7 @@ Portu je moje reklama pro Portu ...a pro používání me referal linku. 😶 Po
 - Zná spoustu věcí o Portu a co neví, ví kde dohledat
 - Neumí být pasivní, ale aktivně ti pomáhá s pasivním investováním.
 
-> 💡 **Souvisí s:** Pokud tě zajímá, jak investuji já, mrkni na [Jak na investice](/posts/jak-na-investice/).
+> 💡 **Souvisí s:** Pokud tě zajímá, jak investuji já, mrkni na [Jak na investice]({% post_url 2024-12-11-jak-na-investice %}).
 
 ---
 
