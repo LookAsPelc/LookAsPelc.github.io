@@ -16,7 +16,7 @@ timezone: Europe/Prague
 
 title: "ÁšHub" # the main title
 
-tagline: "Osobní hub Lukáše Pelce" # it will display as the subtitle
+tagline: "Osobní hub Áše" # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Osobní hub na poznámky, fotky, odkazy a další drobnosti.
@@ -34,8 +34,8 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: "Lukáš Pelc"
-  email:
+  name: "Áš"
+  email: "pelcitko@gmail.com"
   links:
     # The first element serves as the copyright owner's link
     - https://github.com/LookAsPelc

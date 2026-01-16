@@ -5,7 +5,7 @@ order: 4
 layout: about
 ---
 
-Jsem Lukáš a tohle je můj osobní hub. Najdeš tu poznámky, odkazy na fotky, drobné zápisky i rychlé linky na věci, které chci sdílet.
+Jsem Áš a tohle je můj osobní hub. Najdeš tu poznámky, odkazy na fotky, drobné zápisky i rychlé linky na věci, které chci sdílet.
 
 - **Zaměření:** poznámky, projekty, inspirace.
 - **Jazyk:** česky, ale URL nechávám anglicky.
