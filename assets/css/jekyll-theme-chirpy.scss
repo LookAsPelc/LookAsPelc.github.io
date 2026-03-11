@@ -144,3 +144,13 @@ a:visited:hover {
   color: #000;
 }
 
+/* 5. Skrytí licence CC a tlačítka sdílení – minimalistický design */
+.post-meta .license,
+.license-wrapper,
+.share-wrapper,
+.share-icons,
+.share-label,
+.post-tail-wrapper .license,
+.post-tail-wrapper .share-wrapper {
+  display: none !important;
+}
