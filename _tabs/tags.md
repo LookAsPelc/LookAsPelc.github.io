@@ -1,7 +1,7 @@
 ---
 title: "Štítky"
 icon: fas fa-tags
-order: 6
+order: 7
 layout: tags
 ---
 

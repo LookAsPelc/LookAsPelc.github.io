@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>Portfolio backtester tests</title>
+</head>
+<body>
+  <h1>Portfolio backtester tests</h1>
+  <pre id="output"></pre>
+  <script src="/assets/apps/portfolio-backtester/backtester.js"></script>
+  <script>
+    (() => {
+      const output = document.getElementById('output');
+      const results = [];
+      const core = window.PortfolioBacktesterCore;
+
+      function assert(name, condition, detail = '') {
+        results.push({ name, pass: Boolean(condition), detail });
+        if (!condition) throw new Error(`${name}${detail ? `: ${detail}` : ''}`);
+      }
+
+      function close(actual, expected, epsilon = 1e-6) {
+        return Math.abs(actual - expected) <= epsilon;
+      }
+
+      function run() {
+        assert('core is exposed', Boolean(core));
+
+        const months = core.monthsBetween('2020-01', '2021-01');
+        const global = { startMonth: '2020-01', endMonth: '2021-01', months, riskFreeRate: 0 };
+        const baseCfg = {
+          id: 'T',
+          initialInvestment: 100,
+          monthlyInvestment: 0,
+          managerFee: 0,
+          txCost: 0,
+          tolerance: 0.05,
+          rebalMode: 'none',
+          assets: { TEST_FLAT: 1, CASH: 0 },
+          ter: { TEST_FLAT: 0, CASH: 0 }
+        };
+
+        let data = { TEST_FLAT: core.generateSyntheticPrices('TEST_FLAT', months) };
+        let result = core.simulatePortfolio(structuredClone(baseCfg), global, months, data);
+        assert('flat price keeps initial investment', close(result.finalValue, 100), `${result.finalValue} vs 100`);
+
+        const growthCfg = structuredClone(baseCfg);
+        growthCfg.assets = { TEST_GROWTH_1PM: 1, CASH: 0 };
+        growthCfg.ter = { TEST_GROWTH_1PM: 0, CASH: 0 };
+        data = { TEST_GROWTH_1PM: core.generateSyntheticPrices('TEST_GROWTH_1PM', months) };
+        result = core.simulatePortfolio(growthCfg, global, months, data);
+        assert('1 percent monthly compounds over 12 intervals', close(result.finalValue, 100 * Math.pow(1.01, 12)), `${result.finalValue}`);
+
+        const dcaCfg = structuredClone(baseCfg);
+        dcaCfg.initialInvestment = 0;
+        dcaCfg.monthlyInvestment = 100;
+        data = { TEST_FLAT: core.generateSyntheticPrices('TEST_FLAT', months) };
+        result = core.simulatePortfolio(dcaCfg, global, months, data);
+        assert('monthly deposits are all invested on flat price', close(result.finalValue, result.totalInvested), `${result.finalValue} vs ${result.totalInvested}`);
+
+        const buyCfg = structuredClone(dcaCfg);
+        buyCfg.rebalMode = 'buy';
+        result = core.simulatePortfolio(buyCfg, global, months, data);
+        assert('buy-only mode leaves no cash at 100 percent allocation', (result.finalAllocation.CASH || 0) < 1e-9, `${result.finalAllocation.CASH || 0}`);
+
+        output.textContent = results.map(r => `${r.pass ? 'PASS' : 'FAIL'} ${r.name} ${r.detail}`).join('\n');
+        window.TEST_RESULTS = results;
+      }
+
+      try {
+        run();
+      } catch (error) {
+        output.textContent = `${results.map(r => `${r.pass ? 'PASS' : 'FAIL'} ${r.name} ${r.detail}`).join('\n')}\nERROR ${error.message}`.trim();
+        window.TEST_ERROR = error.message;
+        window.TEST_RESULTS = results;
+      }
+    })();
+  </script>
+</body>
+</html>

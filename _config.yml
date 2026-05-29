@@ -211,6 +211,7 @@ compress_html:
 exclude:
   - "*.gem"
   - "*.gemspec"
+  - test/
 
 jekyll-archives:
   enabled: [categories, tags]

@@ -1,0 +1,126 @@
+  <div id="portfolioBacktester" class="portfolio-backtester container app-shell">
+    <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+      <button id="saveConfigBtn" class="btn btn-outline-secondary btn-sm" type="button">Uložit</button>
+      <button id="loadConfigBtn" class="btn btn-outline-secondary btn-sm" type="button">Načíst</button>
+      <button id="exportConfigBtn" class="btn btn-outline-secondary btn-sm" type="button">Export</button>
+    </div>
+
+    <div id="alertBox" class="alert d-none" role="alert"></div>
+
+    <section class="card soft-card mb-4">
+      <div class="card-header d-flex flex-column flex-md-row justify-content-between gap-2">
+        <span>Globální nastavení</span>
+        <span class="pill">Syntetické testy fungují offline bez API</span>
+      </div>
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label for="startDate" class="form-label">Počáteční měsíc</label>
+            <input type="month" id="startDate" class="form-control" value="2020-01" required>
+          </div>
+          <div class="col-md-3">
+            <label for="endDate" class="form-label">Koncový měsíc</label>
+            <input type="month" id="endDate" class="form-control" value="2025-12" required>
+          </div>
+          <div class="col-md-3">
+            <label for="riskFreeRate" class="form-label">Bezriziková sazba p.a. (%)</label>
+            <input type="number" id="riskFreeRate" class="form-control" value="2" min="-20" max="100" step="0.1">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label d-block">Rychlé akce</label>
+            <div class="d-flex flex-wrap gap-2">
+              <button id="syntheticPresetBtn" class="btn btn-outline-info btn-sm" type="button">Syntetický preset</button>
+              <button id="etfPresetBtn" class="btn btn-outline-info btn-sm" type="button">ETF preset</button>
+              <button id="runTestsBtn" class="btn btn-outline-warning btn-sm" type="button">Sanity testy</button>
+              <button id="clearCacheBtn" class="btn btn-outline-secondary btn-sm" type="button">Vymazat cache</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-text mt-3">Syntetické instrumenty fungují offline. Reálná ETF se načítají až po zadání vlastního API klíče v tomto prohlížeči.</div>
+        <details class="api-details mt-3">
+          <summary>Datové API pro reálná ETF</summary>
+          <form id="apiKeyForm" autocomplete="off">
+            <div class="row g-3 mt-1 align-items-end">
+              <div class="col-md-5">
+                <label for="alphaVantageKey" class="form-label">Alpha Vantage API klíč</label>
+                <input id="alphaVantageKey" type="password" class="form-control" autocomplete="off" placeholder="Volitelné">
+              </div>
+              <div class="col-md-5">
+                <label for="twelveDataKey" class="form-label">Twelve Data API klíč</label>
+                <input id="twelveDataKey" type="password" class="form-control" autocomplete="off" placeholder="Volitelné fallback API">
+              </div>
+              <div class="col-md-2 d-flex gap-2">
+                <button id="saveApiKeysBtn" class="btn btn-outline-secondary btn-sm" type="button">Uložit klíče</button>
+                <button id="clearApiKeysBtn" class="btn btn-outline-secondary btn-sm" type="button">Smazat</button>
+              </div>
+            </div>
+          </form>
+          <div id="apiKeyStatus" class="form-text mt-2"></div>
+        </details>
+      </div>
+    </section>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6">
+        <section class="card portfolio-card h-100" data-portfolio="A">
+          <div class="card-header d-flex justify-content-between align-items-center"><strong>Portfolio A</strong><span class="subtle small">cílová aktiva + případný CASH</span></div>
+          <div class="card-body">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6"><label class="form-label">Počáteční investice</label><input id="initialInvestA" type="number" class="form-control" value="100000" min="0" step="1000"></div>
+              <div class="col-md-6"><label class="form-label">Pravidelná měsíční investice</label><input id="monthlyInvestA" type="number" class="form-control" value="10000" min="0" step="100"></div>
+              <div class="col-md-4"><label class="form-label">Správní poplatek p.a. (%)</label><input id="managerFeeA" type="number" class="form-control" value="0.4" min="0" max="100" step="0.01"></div>
+              <div class="col-md-4"><label class="form-label">Transakční náklad (%)</label><input id="txCostA" type="number" class="form-control" value="0.1" min="0" max="100" step="0.01"></div>
+              <div class="col-md-4">
+                <label class="form-label">Tolerance (%) <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="Maximální povolená odchylka od cílové váhy v procentních bodech. Tolerance nerozhoduje, zda se měsíční vklad investuje; vklad se investuje vždy, pokud je cílový CASH menší než aktuální cash.">?</button></label>
+                <input id="toleranceA" type="number" class="form-control" value="5" min="0" max="100" step="0.1">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Rebalancování <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="Bez rebalancování: nové vklady jdou podle cílových vah. Dokupovat podvážené: vklady preferují aktiva pod cílem. Plné: při překročení tolerance prodá nadvážená a koupí podvážená.">?</button></label>
+                <select id="rebalModeA" class="form-select"><option value="none">Bez rebalancování; nové vklady dle cílových vah</option><option value="buy" selected>Dokupovat podvážená aktiva</option><option value="full">Plné rebalancování podle tolerance</option></select>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label mb-0">Alokace: <span id="weightSummaryA">0 % + 100 % CASH</span> <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="CASH je pouze zbytek do 100 %, dočasný stav při vkladu/prodeji, nebo mikrozbytek po transakčních nákladech. Při 100% alokaci by se neměl hromadit.">?</button></label><button class="btn btn-outline-secondary btn-sm add-asset" data-portfolio="A" type="button">+ Přidat</button></div>
+            <div id="assetsA"></div><div id="assetErrorA" class="text-danger small mt-2"></div>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-6">
+        <section class="card portfolio-card h-100" data-portfolio="B">
+          <div class="card-header d-flex justify-content-between align-items-center"><strong>Portfolio B</strong><span class="subtle small">cílová aktiva + případný CASH</span></div>
+          <div class="card-body">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6"><label class="form-label">Počáteční investice</label><input id="initialInvestB" type="number" class="form-control" value="100000" min="0" step="1000"></div>
+              <div class="col-md-6"><label class="form-label">Pravidelná měsíční investice</label><input id="monthlyInvestB" type="number" class="form-control" value="10000" min="0" step="100"></div>
+              <div class="col-md-4"><label class="form-label">Správní poplatek p.a. (%)</label><input id="managerFeeB" type="number" class="form-control" value="0.8" min="0" max="100" step="0.01"></div>
+              <div class="col-md-4"><label class="form-label">Transakční náklad (%)</label><input id="txCostB" type="number" class="form-control" value="0.1" min="0" max="100" step="0.01"></div>
+              <div class="col-md-4">
+                <label class="form-label">Tolerance (%) <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="Maximální povolená odchylka od cílové váhy v procentních bodech. Tolerance nerozhoduje, zda se měsíční vklad investuje; vklad se investuje vždy, pokud je cílový CASH menší než aktuální cash.">?</button></label>
+                <input id="toleranceB" type="number" class="form-control" value="5" min="0" max="100" step="0.1">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Rebalancování <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="Bez rebalancování: nové vklady jdou podle cílových vah. Dokupovat podvážené: vklady preferují aktiva pod cílem. Plné: při překročení tolerance prodá nadvážená a koupí podvážená.">?</button></label>
+                <select id="rebalModeB" class="form-select"><option value="none" selected>Bez rebalancování; nové vklady dle cílových vah</option><option value="buy">Dokupovat podvážená aktiva</option><option value="full">Plné rebalancování podle tolerance</option></select>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label mb-0">Alokace: <span id="weightSummaryB">0 % + 100 % CASH</span> <button class="tiny-help" type="button" data-bs-toggle="tooltip" data-bs-title="CASH je pouze zbytek do 100 %, dočasný stav při vkladu/prodeji, nebo mikrozbytek po transakčních nákladech. Při 100% alokaci by se neměl hromadit.">?</button></label><button class="btn btn-outline-secondary btn-sm add-asset" data-portfolio="B" type="button">+ Přidat</button></div>
+            <div id="assetsB"></div><div id="assetErrorB" class="text-danger small mt-2"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="text-center mb-4"><button id="runSimulationBtn" class="btn btn-primary btn-lg px-5" type="button"><span class="spinner-border spinner-border-sm me-2 d-none" id="runSpinner"></span>Spustit simulaci</button></div>
+
+    <section id="testsSection" class="card soft-card mb-4 d-none"><div class="card-header">Sanity testy výpočetního jádra</div><div class="card-body"><div id="testsOutput"></div></div></section>
+
+    <section id="resultsSection" class="d-none">
+      <div class="card soft-card mb-4"><div class="card-header d-flex flex-column flex-md-row justify-content-between gap-2"><span>Souhrn simulace</span><span class="subtle small" id="periodSummary"></span></div><div class="card-body"><div class="row g-3"><div class="col-md-4"><div class="p-3 rounded border border-secondary-subtle"><div class="subtle small">Konečná hodnota A − B</div><div id="diffFinal" class="h4 mb-0"></div></div></div><div class="col-md-4"><div class="p-3 rounded border border-secondary-subtle"><div class="subtle small">Zisk A − B</div><div id="diffProfit" class="h4 mb-0"></div></div></div><div class="col-md-4"><div class="p-3 rounded border border-secondary-subtle"><div class="subtle small">XIRR A − B</div><div id="diffXirr" class="h4 mb-0"></div></div></div></div></div></div>
+      <div class="card soft-card mb-4"><div class="card-header">Metriky</div><div class="card-body table-responsive"><table class="table table-striped table-hover metric-table"><thead><tr><th>Metrika</th><th>Portfolio A</th><th>Portfolio B</th></tr></thead><tbody id="metricsBody"></tbody></table></div></div>
+      <div class="card soft-card mb-4"><div class="card-header d-flex flex-column flex-md-row justify-content-between gap-2"><span>Vývoj hodnoty portfolií</span><div class="btn-group btn-group-sm" role="group"><input type="radio" class="btn-check" name="axisScale" id="axisLinear" value="linear" checked><label class="btn btn-outline-secondary" for="axisLinear">Lineární</label><input type="radio" class="btn-check" name="axisScale" id="axisLog" value="logarithmic"><label class="btn btn-outline-secondary" for="axisLog">Log</label></div></div><div class="card-body"><div class="chart-box"><canvas id="valueChart"></canvas></div></div></div>
+      <div class="card soft-card mb-4"><div class="card-header">Unitized NAV / čistá výkonnost strategie</div><div class="card-body"><div class="chart-box"><canvas id="navChart"></canvas></div></div></div>
+      <div class="row g-4 mb-4"><div class="col-lg-6"><div class="card soft-card"><div class="card-header">Finální alokace A</div><div class="card-body"><div class="allocation-box"><canvas id="allocChartA"></canvas></div></div></div></div><div class="col-lg-6"><div class="card soft-card"><div class="card-header">Finální alokace B</div><div class="card-body"><div class="allocation-box"><canvas id="allocChartB"></canvas></div></div></div></div></div>
+      <div class="card soft-card"><div class="card-header">Metodika</div><div class="card-body"><ul class="mb-0"><li>Měsíční vklad se vkládá na začátku každého měsíce včetně prvního.</li><li>Reálná ETF se načítají přes Alpha Vantage monthly adjusted close; pro accumulating ETF je povolen Twelve Data fallback s <span class="mono">adjust=splits</span>.</li><li>Bez rebalancování: nové vklady se investují podle cílových vah, staré pozice se neprodávají.</li><li>Dokupovat podvážená: vklady preferují podvážená aktiva; když není co dorovnávat, vklad se stále investuje podle cílových vah.</li><li>Plné rebalancování: při překročení tolerance prodá nadvážená a koupí podvážená aktiva.</li><li>XIRR je money-weighted výnos investora. TWR/NAV je čistá výkonnost strategie bez zkreslení velikostí vkladů.</li></ul></div></div>
+    </section>
+
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Export konfigurace</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít"></button></div><div class="modal-body"><textarea id="exportText" class="form-control monospace" rows="16" readonly></textarea></div></div></div></div>
+  </div>

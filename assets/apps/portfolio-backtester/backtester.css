@@ -1,0 +1,34 @@
+    .portfolio-backtester { --soft-bg: rgba(255,255,255,.035); --soft-border: rgba(255,255,255,.13); }
+    .portfolio-backtester.app-shell { max-width: 1320px; }
+    .portfolio-backtester .subtle { color: var(--bs-secondary-color); }
+    .portfolio-backtester .soft-card,
+    .portfolio-backtester .portfolio-card { border: 1px solid var(--soft-border); background: var(--soft-bg); border-radius: 1rem; }
+    .portfolio-backtester .portfolio-card .card-header,
+    .portfolio-backtester .soft-card .card-header { border-bottom-color: var(--soft-border); }
+    .portfolio-backtester .asset-row { display: grid; grid-template-columns: minmax(0, 1fr) 110px 64px 44px; gap: .5rem; align-items: start; margin-bottom: .75rem; }
+    .portfolio-backtester .asset-picker { min-width: 0; }
+    .portfolio-backtester .asset-meta { display: block; min-height: 1.2rem; color: var(--bs-secondary-color); margin-top: .2rem; }
+    .portfolio-backtester .asset-ticker { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .portfolio-backtester .asset-detail,
+    .portfolio-backtester .remove-asset { min-height: 31px; display: inline-flex; align-items: center; justify-content: center; }
+    .portfolio-backtester .remove-asset svg { width: 1rem; height: 1rem; }
+    .portfolio-backtester .asset-detail.disabled { opacity: .45; pointer-events: none; }
+    .portfolio-backtester .chart-box { height: 430px; position: relative; }
+    .portfolio-backtester .allocation-box { height: 300px; position: relative; }
+    .portfolio-backtester .metric-table td,
+    .portfolio-backtester .metric-table th { vertical-align: middle; }
+    .portfolio-backtester .metric-help { cursor: help; text-decoration: underline dotted; text-underline-offset: .2em; }
+    .portfolio-backtester .result-positive { color: var(--bs-success); font-weight: 700; }
+    .portfolio-backtester .result-negative { color: var(--bs-danger); font-weight: 700; }
+    .portfolio-backtester .pill { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--soft-border); border-radius: 999px; padding: .2rem .55rem; font-size: .85rem; color: var(--bs-secondary-color); }
+    .portfolio-backtester .test-pass { color: var(--bs-success); font-weight: 600; }
+    .portfolio-backtester .test-fail { color: var(--bs-danger); font-weight: 600; }
+    .portfolio-backtester .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .portfolio-backtester .tiny-help { border: 0; background: transparent; color: var(--bs-info); padding: 0 .15rem; font-size: .9rem; }
+    .portfolio-backtester textarea.monospace { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (max-width: 575.98px) { .portfolio-backtester .asset-row { grid-template-columns: 1fr 84px 1fr 1fr; } .portfolio-backtester .asset-picker { grid-column: 1 / -1; } }
+    .portfolio-backtester.app-shell { width: 100%; max-width: 1320px; }
+    .portfolio-backtester .api-details { border-top: 1px solid var(--soft-border); padding-top: .75rem; }
+    .portfolio-backtester .api-details summary { cursor: pointer; color: var(--bs-secondary-color); }
+    .portfolio-backtester .asset-detail { min-width: 58px; }
+    .portfolio-backtester .asset-ticker { min-width: 0; }
