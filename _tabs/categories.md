@@ -1,7 +1,7 @@
 ---
 title: "Kategorie"
 icon: fas fa-stream
-order: 6
+order: 5
 layout: categories
 ---
 

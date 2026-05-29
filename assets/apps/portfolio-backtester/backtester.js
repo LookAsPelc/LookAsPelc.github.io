@@ -1,8 +1,11 @@
 (() => {
   'use strict';
 
+    const API_KEYS = {
+      alphaVantage: 'T3P6LQYUCYFZRAR6',
+      twelveData: '04d8c977520c447d930fa4bc7293b586'
+    };
     const CONFIG_KEY = 'portfolioBacktesterConfig_v5';
-    const API_KEY_STORAGE = 'portfolioBacktesterApiKeys_v1';
     const DATA_CACHE_PREFIX = 'portfolioBacktesterData_v4_';
     const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
     const DEFAULT_DETAIL = symbol => `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
@@ -121,42 +124,7 @@
     function setLoading(isLoading) { $('runSimulationBtn').disabled = isLoading; $('runSpinner').classList.toggle('d-none', !isLoading); }
     function structuredCloneSafe(value) { return JSON.parse(JSON.stringify(value)); }
     function getApiKeys() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(API_KEY_STORAGE) || '{}');
-        return {
-          alphaVantage: String(parsed.alphaVantage || '').trim(),
-          twelveData: String(parsed.twelveData || '').trim()
-        };
-      } catch (_) {
-        return { alphaVantage: '', twelveData: '' };
-      }
-    }
-    function saveApiKeys() {
-      const keys = {
-        alphaVantage: $('alphaVantageKey')?.value.trim() || '',
-        twelveData: $('twelveDataKey')?.value.trim() || ''
-      };
-      localStorage.setItem(API_KEY_STORAGE, JSON.stringify(keys));
-      updateApiKeyStatus();
-      showAlert('API klíče jsou uložené jen v tomto prohlížeči.', 'success');
-    }
-    function clearApiKeys() {
-      localStorage.removeItem(API_KEY_STORAGE);
-      if ($('alphaVantageKey')) $('alphaVantageKey').value = '';
-      if ($('twelveDataKey')) $('twelveDataKey').value = '';
-      updateApiKeyStatus();
-      showAlert('API klíče byly smazány z localStorage.', 'success');
-    }
-    function updateApiKeyStatus() {
-      const status = $('apiKeyStatus');
-      if (!status) return;
-      const keys = getApiKeys();
-      if ($('alphaVantageKey')) $('alphaVantageKey').value = keys.alphaVantage;
-      if ($('twelveDataKey')) $('twelveDataKey').value = keys.twelveData;
-      const parts = [];
-      parts.push(keys.alphaVantage ? 'Alpha Vantage uložený' : 'Alpha Vantage chybí');
-      parts.push(keys.twelveData ? 'Twelve Data uložený' : 'Twelve Data chybí');
-      status.textContent = `${parts.join(' · ')}. Syntetické testy klíče nepotřebují.`;
+      return API_KEYS;
     }
 
     function describeInstrument(symbol) {
@@ -341,7 +309,7 @@
       const cacheKey = `${DATA_CACHE_PREFIX}av_${symbol}`; const cached = localStorage.getItem(cacheKey);
       if (cached) { try { const parsed = JSON.parse(cached); if (Date.now() - parsed.timestamp < CACHE_TTL_MS) return parsed.data; } catch (_) {} }
       const keys = getApiKeys();
-      if (!keys.alphaVantage) throw new Error(`${symbol}: pro Alpha Vantage zadej vlastní API klíč.`);
+      if (!keys.alphaVantage) throw new Error(`${symbol}: Alpha Vantage API klíč není dostupný.`);
       const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${encodeURIComponent(symbol)}&apikey=${encodeURIComponent(keys.alphaVantage)}`;
       const response = await fetch(url); if (!response.ok) throw new Error(`${symbol}: Alpha Vantage HTTP ${response.status}`);
       const payload = await response.json();
@@ -365,8 +333,8 @@
       const errors = [];
       for (const attempt of attempts) {
         const keys = getApiKeys();
-      if (!keys.twelveData) throw new Error(`${symbol}: pro Twelve Data fallback zadej vlastní API klíč.`);
-      const params = new URLSearchParams({ symbol: attempt.symbol, interval: '1month', apikey: keys.twelveData, outputsize: '5000', adjust, start_date: `${startMonth}-01` });
+        if (!keys.twelveData) throw new Error(`${symbol}: Twelve Data API klíč není dostupný.`);
+        const params = new URLSearchParams({ symbol: attempt.symbol, interval: '1month', apikey: keys.twelveData, outputsize: '5000', adjust, start_date: `${startMonth}-01` });
         if (attempt.exchange) params.set('exchange', attempt.exchange);
         try {
           const response = await fetch(`https://api.twelvedata.com/time_series?${params.toString()}`);
@@ -563,7 +531,7 @@
     function init() {
       qsa('.add-asset').forEach(btn => btn.addEventListener('click', () => addAssetRow(btn.dataset.portfolio)));
       ['A', 'B'].forEach(id => $(`rebalMode${id}`).addEventListener('change', () => updateRebalUi(id)));
-      $('runSimulationBtn').addEventListener('click', runSimulation); $('runTestsBtn').addEventListener('click', runSanityTests); $('saveConfigBtn').addEventListener('click', saveConfig); $('loadConfigBtn').addEventListener('click', loadConfig); $('exportConfigBtn').addEventListener('click', exportConfig); $('clearCacheBtn').addEventListener('click', clearDataCache); $('syntheticPresetBtn').addEventListener('click', applySyntheticPreset); $('etfPresetBtn').addEventListener('click', applyEtfPreset); $('saveApiKeysBtn').addEventListener('click', saveApiKeys); $('clearApiKeysBtn').addEventListener('click', clearApiKeys); updateApiKeyStatus();
+      $('runSimulationBtn').addEventListener('click', runSimulation); $('runTestsBtn').addEventListener('click', runSanityTests); $('saveConfigBtn').addEventListener('click', saveConfig); $('loadConfigBtn').addEventListener('click', loadConfig); $('exportConfigBtn').addEventListener('click', exportConfig); $('clearCacheBtn').addEventListener('click', clearDataCache); $('syntheticPresetBtn').addEventListener('click', applySyntheticPreset); $('etfPresetBtn').addEventListener('click', applyEtfPreset);
       qsa('input[name="axisScale"]').forEach(el => el.addEventListener('change', () => { if (state.lastResult) drawValueChart(state.lastResult.resultA, state.lastResult.resultB); }));
       addAssetRow('A', 'TEST_SINE_HIGH', 50); addAssetRow('A', 'TEST_NEG_SINE_HIGH', 50); addAssetRow('B', 'TEST_SINE_HIGH', 50); addAssetRow('B', 'TEST_NEG_SINE_HIGH', 50); updateAllRebalUi(); initTooltips();
     }

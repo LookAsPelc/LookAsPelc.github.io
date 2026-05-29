@@ -1,7 +1,7 @@
 ---
 title: "Archivy"
 icon: fas fa-archive
-order: 8
+order: 7
 layout: archives
 ---
 

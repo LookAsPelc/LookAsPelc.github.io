@@ -36,27 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="form-text mt-3">Syntetické instrumenty fungují offline. Reálná ETF se načítají až po zadání vlastního API klíče v tomto prohlížeči.</div>
-        <details class="api-details mt-3">
-          <summary>Datové API pro reálná ETF</summary>
-          <form id="apiKeyForm" autocomplete="off">
-            <div class="row g-3 mt-1 align-items-end">
-              <div class="col-md-5">
-                <label for="alphaVantageKey" class="form-label">Alpha Vantage API klíč</label>
-                <input id="alphaVantageKey" type="password" class="form-control" autocomplete="off" placeholder="Volitelné">
-              </div>
-              <div class="col-md-5">
-                <label for="twelveDataKey" class="form-label">Twelve Data API klíč</label>
-                <input id="twelveDataKey" type="password" class="form-control" autocomplete="off" placeholder="Volitelné fallback API">
-              </div>
-              <div class="col-md-2 d-flex gap-2">
-                <button id="saveApiKeysBtn" class="btn btn-outline-secondary btn-sm" type="button">Uložit klíče</button>
-                <button id="clearApiKeysBtn" class="btn btn-outline-secondary btn-sm" type="button">Smazat</button>
-              </div>
-            </div>
-          </form>
-          <div id="apiKeyStatus" class="form-text mt-2"></div>
-        </details>
+        <div class="form-text mt-3">Alpha Vantage se používá primárně; Twelve Data slouží jako fallback hlavně pro accumulating ETF se split-adjustmentem. Syntetické instrumenty fungují offline bez API.</div>
       </div>
     </section>
 

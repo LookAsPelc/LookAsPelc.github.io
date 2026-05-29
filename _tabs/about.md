@@ -1,7 +1,7 @@
 ---
 title: "Áš"
 icon: fas fa-user-astronaut
-order: 5
+order: 4
 layout: about
 ---
 

@@ -1,5 +1,11 @@
-    .portfolio-backtester { --soft-bg: rgba(255,255,255,.035); --soft-border: rgba(255,255,255,.13); }
-    .portfolio-backtester.app-shell { max-width: 1320px; }
+    body.portfolio-backtester-page { min-height: 100vh; padding: 1rem 0 2rem; background: var(--bs-body-bg); color: var(--bs-body-color); }
+    .portfolio-backtester-page .app-shell { max-width: 1320px; }
+    .portfolio-backtester-page .app-header h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 500; letter-spacing: 0; }
+    .portfolio-backtester-page .back-link { display: inline-flex; margin-bottom: .35rem; color: var(--bs-secondary-color); text-decoration: none; }
+    .portfolio-backtester-page .back-link:hover { color: var(--bs-link-color); }
+    .portfolio-backtester { --soft-bg: rgba(15,23,42,.025); --soft-border: rgba(15,23,42,.13); }
+    [data-bs-theme='dark'] .portfolio-backtester { --soft-bg: rgba(255,255,255,.035); --soft-border: rgba(255,255,255,.13); }
+    .portfolio-backtester.app-shell { max-width: 1320px; padding-inline: 0; }
     .portfolio-backtester .subtle { color: var(--bs-secondary-color); }
     .portfolio-backtester .soft-card,
     .portfolio-backtester .portfolio-card { border: 1px solid var(--soft-border); background: var(--soft-bg); border-radius: 1rem; }
@@ -28,7 +34,5 @@
     .portfolio-backtester textarea.monospace { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     @media (max-width: 575.98px) { .portfolio-backtester .asset-row { grid-template-columns: 1fr 84px 1fr 1fr; } .portfolio-backtester .asset-picker { grid-column: 1 / -1; } }
     .portfolio-backtester.app-shell { width: 100%; max-width: 1320px; }
-    .portfolio-backtester .api-details { border-top: 1px solid var(--soft-border); padding-top: .75rem; }
-    .portfolio-backtester .api-details summary { cursor: pointer; color: var(--bs-secondary-color); }
     .portfolio-backtester .asset-detail { min-width: 58px; }
     .portfolio-backtester .asset-ticker { min-width: 0; }
