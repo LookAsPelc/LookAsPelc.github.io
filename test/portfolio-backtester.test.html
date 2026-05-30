@@ -63,6 +63,18 @@
         result = core.simulatePortfolio(buyCfg, global, months, data);
         assert('buy-only mode leaves no cash at 100 percent allocation', (result.finalAllocation.CASH || 0) < 1e-9, `${result.finalAllocation.CASH || 0}`);
 
+        const highToleranceCfg = structuredClone(baseCfg);
+        highToleranceCfg.assets = { TEST_SINE_HIGH: 0.5, TEST_NEG_SINE_HIGH: 0.5, CASH: 0 };
+        highToleranceCfg.ter = { TEST_SINE_HIGH: 0, TEST_NEG_SINE_HIGH: 0, CASH: 0 };
+        highToleranceCfg.rebalMode = 'full';
+        highToleranceCfg.tolerance = 0.26;
+        data = {
+          TEST_SINE_HIGH: core.generateSyntheticPrices('TEST_SINE_HIGH', months),
+          TEST_NEG_SINE_HIGH: core.generateSyntheticPrices('TEST_NEG_SINE_HIGH', months)
+        };
+        result = core.simulatePortfolio(highToleranceCfg, global, months, data);
+        assert('full rebalance at 26 percent tolerance keeps two finite series', Number.isFinite(result.finalValue) && result.history.every(h => Number.isFinite(h.value) && Number.isFinite(h.navIndex)) && (result.finalAllocation.TEST_SINE_HIGH || 0) > 0 && (result.finalAllocation.TEST_NEG_SINE_HIGH || 0) > 0, JSON.stringify(result.finalAllocation));
+
         output.textContent = results.map(r => `${r.pass ? 'PASS' : 'FAIL'} ${r.name} ${r.detail}`).join('\n');
         window.TEST_RESULTS = results;
       }

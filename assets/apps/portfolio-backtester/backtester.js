@@ -20,6 +20,16 @@
       detailUrl: DEFAULT_DETAIL(symbol)
     });
 
+    const CRYPTO_USD = (label, symbol) => ({
+      label, category: 'Krypto', type: 'api', ter: 0, distribution: 'none',
+      alphaDigitalSymbol: symbol,
+      alphaDigitalMarket: 'USD',
+      twelveSymbol: `${symbol}/USD`,
+      twelveExchange: null,
+      twelveAdjust: 'splits',
+      detailUrl: DEFAULT_DETAIL(`${symbol}-USD`)
+    });
+
     const INSTRUMENTS = {
       TEST_FLAT: { label: 'TEST: konstantní cena 100', category: 'Testovací', type: 'synthetic', ter: 0, synthetic: 'flat', detailUrl: '#' },
       TEST_BOND_4PA: { label: 'TEST: Bondy / konstantní růst 4 % p.a.', category: 'Testovací', type: 'synthetic', ter: 0, synthetic: 'bond4', detailUrl: '#' },
@@ -63,6 +73,8 @@
       SLV: ETF_US('iShares Silver Trust', 'Komodity – stříbro', 0.0050, 'SLV', 'NYSE', 'none'),
       DBC: ETF_US('Invesco DB Commodity Index Tracking Fund', 'Komodity – široký koš', 0.0087, 'DBC', 'NYSE', 'none'),
       USO: ETF_US('United States Oil Fund', 'Komodity – ropa', 0.0060, 'USO', 'NYSE', 'none'),
+
+      BTC: CRYPTO_USD('Bitcoin / BTC-USD', 'BTC'),
 
       VNQ: ETF_US('Vanguard Real Estate ETF', 'REIT / nemovitosti', 0.0013, 'VNQ', 'NYSE'),
       VNQI: ETF_US('Vanguard Global ex-US Real Estate ETF', 'REIT / nemovitosti mimo USA', 0.0012, 'VNQI', 'NASDAQ'),
@@ -132,7 +144,7 @@
       if (!meta) return '';
       if (meta.type === 'synthetic') return `${meta.category} · offline · bez TER`;
       const dist = meta.distribution === 'accumulating' ? 'Acc' : meta.distribution === 'distributing' ? 'Dist' : 'bez dividend';
-      const primary = meta.alphaSymbol ? 'Alpha Vantage adjusted close' : 'Twelve Data';
+      const primary = meta.alphaDigitalSymbol ? 'Alpha Vantage crypto monthly' : meta.alphaSymbol ? 'Alpha Vantage adjusted close' : 'Twelve Data';
       return `${meta.category} · ${dist} · TER ${formatPct(meta.ter, 2)} · ${primary}`;
     }
     function escapeAttr(value) {
@@ -320,6 +332,26 @@
       if (Object.keys(data).length < 2) throw new Error(`${symbol}: nedostatek Alpha Vantage dat.`);
       localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data })); return data;
     }
+    async function fetchAlphaDigitalCurrencyMonthly(symbol, market = 'USD') {
+      const cacheKey = `${DATA_CACHE_PREFIX}av_crypto_${symbol}_${market}`; const cached = localStorage.getItem(cacheKey);
+      if (cached) { try { const parsed = JSON.parse(cached); if (Date.now() - parsed.timestamp < CACHE_TTL_MS) return parsed.data; } catch (_) {} }
+      const keys = getApiKeys();
+      if (!keys.alphaVantage) throw new Error(`${symbol}: Alpha Vantage API klíč není dostupný.`);
+      const url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=${encodeURIComponent(symbol)}&market=${encodeURIComponent(market)}&apikey=${encodeURIComponent(keys.alphaVantage)}`;
+      const response = await fetch(url); if (!response.ok) throw new Error(`${symbol}: Alpha Vantage crypto HTTP ${response.status}`);
+      const payload = await response.json();
+      if (payload['Error Message']) throw new Error(`${symbol}: ${payload['Error Message']}`);
+      if (payload['Note']) throw new Error(`${symbol}: Alpha Vantage limit: ${payload['Note']}`);
+      const series = payload['Time Series (Digital Currency Monthly)']; if (!series) throw new Error(`${symbol}: chybí Time Series (Digital Currency Monthly).`);
+      const data = {};
+      Object.entries(series).forEach(([date, item]) => {
+        const closeKey = Object.keys(item).find(key => key.toLowerCase().includes('close') && key.includes(`(${market})`)) || Object.keys(item).find(key => key.toLowerCase().includes('close'));
+        const price = Number(item[closeKey]);
+        if (Number.isFinite(price) && price > 0) data[date.slice(0, 7)] = price;
+      });
+      if (Object.keys(data).length < 2) throw new Error(`${symbol}: nedostatek Alpha Vantage krypto dat.`);
+      localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data })); return data;
+    }
     async function fetchTwelveMonthly(symbol, exchange, adjust, startMonth) {
       const cacheKey = `${DATA_CACHE_PREFIX}td_${symbol}_${exchange || 'any'}_${adjust}`;
       const cached = localStorage.getItem(cacheKey);
@@ -357,6 +389,9 @@
       if (!meta) throw new Error(`Neznámý instrument ${ticker}.`);
       if (meta.type === 'synthetic') return generateSyntheticPrices(ticker, global.months);
       const errors = [];
+      if (meta.alphaDigitalSymbol) {
+        try { return await fetchAlphaDigitalCurrencyMonthly(meta.alphaDigitalSymbol, meta.alphaDigitalMarket || 'USD'); } catch (err) { errors.push(err.message || String(err)); }
+      }
       if (meta.alphaSymbol) {
         try { return await fetchAlphaMonthlyAdjusted(meta.alphaSymbol); } catch (err) { errors.push(err.message || String(err)); }
       }
@@ -404,6 +439,17 @@
       for (const ticker of tickers) { const current = (portfolio[ticker]?.value || 0) / total; const target = cfg.assets[ticker] || 0; if (Math.abs(current - target) > cfg.tolerance + 1e-9) return true; }
       return false;
     }
+    function allocationDrift(portfolio, cfg) {
+      const total = totalValue(portfolio); if (total <= 1e-9) return 0;
+      const tickers = new Set([...Object.keys(portfolio), ...Object.keys(cfg.assets)]);
+      let maxDrift = 0;
+      tickers.forEach(ticker => {
+        const current = (portfolio[ticker]?.value || 0) / total;
+        const target = cfg.assets[ticker] || 0;
+        maxDrift = Math.max(maxDrift, Math.abs(current - target));
+      });
+      return maxDrift;
+    }
     function investCashPreferUnderweight(portfolio, cfg, month, data) {
       let tx = 0; let total = totalValue(portfolio); if (total <= 1e-9) return 0;
       const cashTarget = total * (cfg.assets.CASH || 0); let excessCash = Math.max(0, portfolio.CASH.value - cashTarget); if (excessCash <= 1e-9) return 0;
@@ -422,10 +468,13 @@
       return tx;
     }
     function executePolicyAfterCashflow(portfolio, cfg, cashflowAmount, month, data) {
-      if (cfg.rebalMode === 'none') return investAmountByTarget(portfolio, cfg, cashflowAmount, month, data);
-      if (cfg.rebalMode === 'buy') return investCashPreferUnderweight(portfolio, cfg, month, data);
-      if (cfg.rebalMode === 'full') { if (needsRebalance(portfolio, cfg)) return rebalanceFull(portfolio, cfg, month, data); return investAmountByTarget(portfolio, cfg, cashflowAmount, month, data); }
-      return 0;
+      if (cfg.rebalMode === 'none') return { txCost: investAmountByTarget(portfolio, cfg, cashflowAmount, month, data), rebalanced: false };
+      if (cfg.rebalMode === 'buy') return { txCost: investCashPreferUnderweight(portfolio, cfg, month, data), rebalanced: false };
+      if (cfg.rebalMode === 'full') {
+        if (needsRebalance(portfolio, cfg)) return { txCost: rebalanceFull(portfolio, cfg, month, data), rebalanced: true };
+        return { txCost: investAmountByTarget(portfolio, cfg, cashflowAmount, month, data), rebalanced: false };
+      }
+      return { txCost: 0, rebalanced: false };
     }
     function applyFees(portfolio, cfg) {
       let terFee = 0; let managerFee = 0;
@@ -448,24 +497,27 @@
     function maxDrawdownFromIndex(indexValues) { let peak = -Infinity; let maxDd = 0; indexValues.forEach(v => { peak = Math.max(peak, v); if (peak > 0) maxDd = Math.min(maxDd, v / peak - 1); }); return maxDd; }
 
     function simulatePortfolio(cfg, global, months, data) {
-      const portfolio = emptyPortfolio(); const cashflows = []; const history = []; const monthlyReturns = []; let totalInvested = 0; let totalTxCosts = 0; let totalFees = 0; let totalTerFees = 0; let totalManagerFees = 0; let navIndex = 100; const navSeries = [navIndex]; const firstMonth = months[0];
+      const portfolio = emptyPortfolio(); const cashflows = []; const history = []; const monthlyReturns = []; let totalInvested = 0; let totalTxCosts = 0; let totalFees = 0; let totalTerFees = 0; let totalManagerFees = 0; let rebalanceCount = 0; let maxAllocationDrift = 0; let navIndex = 100; const navSeries = [navIndex]; const firstMonth = months[0];
       function addExternalContribution(amount, month, label) { if (amount <= 0) return 0; portfolio.CASH.shares += amount; portfolio.CASH.value = portfolio.CASH.shares; totalInvested += amount; cashflows.push({ date: monthToDate(month), amount: -amount, label }); return amount; }
       const firstDeposit = addExternalContribution(cfg.initialInvestment, firstMonth, 'Počáteční investice') + addExternalContribution(cfg.monthlyInvestment, firstMonth, 'První měsíční vklad');
-      totalTxCosts += executePolicyAfterCashflow(portfolio, cfg, firstDeposit, firstMonth, data); markToMarket(portfolio, firstMonth, data);
+      let policy = executePolicyAfterCashflow(portfolio, cfg, firstDeposit, firstMonth, data); totalTxCosts += policy.txCost; markToMarket(portfolio, firstMonth, data);
+      maxAllocationDrift = Math.max(maxAllocationDrift, allocationDrift(portfolio, cfg));
       history.push({ month: firstMonth, value: totalValue(portfolio), deposit: firstDeposit, fees: 0, txCosts: totalTxCosts, cumulativeInvested: totalInvested, navIndex, portfolio: clonePortfolio(portfolio) });
       for (let i = 1; i < months.length; i++) {
         const prevMonth = months[i - 1]; const month = months[i]; markToMarket(portfolio, prevMonth, data); let depositThisRecord = 0; let txThisRecord = 0; let feesThisRecord = 0;
-        const deposit = addExternalContribution(cfg.monthlyInvestment, prevMonth, 'Měsíční vklad'); depositThisRecord += deposit; txThisRecord += executePolicyAfterCashflow(portfolio, cfg, deposit, prevMonth, data);
+        const deposit = addExternalContribution(cfg.monthlyInvestment, prevMonth, 'Měsíční vklad'); depositThisRecord += deposit; policy = executePolicyAfterCashflow(portfolio, cfg, deposit, prevMonth, data); txThisRecord += policy.txCost; if (policy.rebalanced) rebalanceCount++;
+        maxAllocationDrift = Math.max(maxAllocationDrift, allocationDrift(portfolio, cfg));
         const startValueForReturn = totalValue(portfolio); markToMarket(portfolio, month, data); const fees = applyFees(portfolio, cfg); feesThisRecord += fees.totalFee; totalFees += fees.totalFee; totalTerFees += fees.terFee; totalManagerFees += fees.managerFee;
         const valueAfterMarketAndFees = totalValue(portfolio); const monthlyReturn = startValueForReturn > 1e-9 ? (valueAfterMarketAndFees / startValueForReturn) - 1 : 0;
         if (Number.isFinite(monthlyReturn)) { monthlyReturns.push(monthlyReturn); navIndex *= (1 + monthlyReturn); navSeries.push(navIndex); }
         totalTxCosts += txThisRecord; markToMarket(portfolio, month, data);
+        maxAllocationDrift = Math.max(maxAllocationDrift, allocationDrift(portfolio, cfg));
         history.push({ month, value: totalValue(portfolio), deposit: depositThisRecord, fees: feesThisRecord, txCosts: txThisRecord, cumulativeInvested: totalInvested, navIndex, portfolio: clonePortfolio(portfolio) });
       }
       const finalValue = totalValue(portfolio); cashflows.push({ date: monthToDate(months[months.length - 1]), amount: finalValue, label: 'Finální hodnota' });
       const product = monthlyReturns.reduce((acc, r) => acc * (1 + r), 1); const twrAnnual = monthlyReturns.length > 0 ? Math.pow(product, 12 / monthlyReturns.length) - 1 : NaN; const volAnnual = stddev(monthlyReturns) * Math.sqrt(12); const sharpe = Number.isFinite(twrAnnual) && Number.isFinite(volAnnual) && volAnnual > 1e-9 ? (twrAnnual - global.riskFreeRate) / volAnnual : NaN; const moneyWeighted = xirr(cashflows); const maxDd = maxDrawdownFromIndex(navSeries); const simpleProfit = finalValue - totalInvested;
       const finalAllocation = {}; const finalTotal = totalValue(portfolio); Object.entries(portfolio).forEach(([ticker, item]) => { if (item.value > 1e-7 && finalTotal > 1e-9) finalAllocation[ticker] = item.value / finalTotal; });
-      return { id: cfg.id, history, finalValue, totalInvested, simpleProfit, totalFees, totalTerFees, totalManagerFees, totalTxCosts, monthlyReturns, twrAnnual, xirr: moneyWeighted, volatilityAnnual: volAnnual, sharpe, maxDrawdown: maxDd, finalAllocation, cashflows };
+      return { id: cfg.id, history, finalValue, totalInvested, simpleProfit, totalFees, totalTerFees, totalManagerFees, totalTxCosts, rebalanceCount, maxAllocationDrift, monthlyReturns, twrAnnual, xirr: moneyWeighted, volatilityAnnual: volAnnual, sharpe, maxDrawdown: maxDd, finalAllocation, cashflows };
     }
 
     function collectConfig() {
@@ -479,7 +531,7 @@
     function renderResults({ months, resultA, resultB }) {
       $('resultsSection').classList.remove('d-none'); $('periodSummary').textContent = `${months[0]} až ${months[months.length - 1]} · ${months.length - 1} měsíčních intervalů`;
       setDiff('diffFinal', resultA.finalValue - resultB.finalValue, formatValue(resultA.finalValue - resultB.finalValue)); setDiff('diffProfit', resultA.simpleProfit - resultB.simpleProfit, formatValue(resultA.simpleProfit - resultB.simpleProfit)); setDiff('diffXirr', resultA.xirr - resultB.xirr, formatPct(resultA.xirr - resultB.xirr));
-      $('metricsBody').innerHTML = [metricRow('Konečná hodnota', formatValue(resultA.finalValue), formatValue(resultB.finalValue)), metricRow('Celkem vloženo', formatValue(resultA.totalInvested), formatValue(resultB.totalInvested)), metricRow('Zisk / ztráta', signedValue(resultA.simpleProfit), signedValue(resultB.simpleProfit)), metricRow('XIRR / money-weighted výnos', formatPct(resultA.xirr), formatPct(resultB.xirr), 'Výnos investora včetně načasování vkladů.'), metricRow('TWR / čistý výnos strategie', formatPct(resultA.twrAnnual), formatPct(resultB.twrAnnual), 'Time-weighted výnos bez zkreslení velikostí vkladů.'), metricRow('Roční volatilita', formatPct(resultA.volatilityAnnual), formatPct(resultB.volatilityAnnual)), metricRow('Maximální propad', formatPct(resultA.maxDrawdown), formatPct(resultB.maxDrawdown), 'Počítáno z unitized NAV, ne z absolutní hodnoty s dalšími vklady.'), metricRow('Sharpe Ratio', formatNumber(resultA.sharpe), formatNumber(resultB.sharpe)), metricRow('Poplatky celkem', formatValue(resultA.totalFees), formatValue(resultB.totalFees)), metricRow('z toho TER', formatValue(resultA.totalTerFees), formatValue(resultB.totalTerFees)), metricRow('z toho správce/platforma', formatValue(resultA.totalManagerFees), formatValue(resultB.totalManagerFees)), metricRow('Transakční náklady', formatValue(resultA.totalTxCosts), formatValue(resultB.totalTxCosts)), metricRow('Finální CASH váha', formatPct(resultA.finalAllocation.CASH || 0), formatPct(resultB.finalAllocation.CASH || 0))].join('');
+      $('metricsBody').innerHTML = [metricRow('Konečná hodnota', formatValue(resultA.finalValue), formatValue(resultB.finalValue)), metricRow('Celkem vloženo', formatValue(resultA.totalInvested), formatValue(resultB.totalInvested)), metricRow('Zisk / ztráta', signedValue(resultA.simpleProfit), signedValue(resultB.simpleProfit)), metricRow('XIRR / money-weighted výnos', formatPct(resultA.xirr), formatPct(resultB.xirr), 'Výnos investora včetně načasování vkladů.'), metricRow('TWR / čistý výnos strategie', formatPct(resultA.twrAnnual), formatPct(resultB.twrAnnual), 'Time-weighted výnos bez zkreslení velikostí vkladů.'), metricRow('Roční volatilita', formatPct(resultA.volatilityAnnual), formatPct(resultB.volatilityAnnual)), metricRow('Maximální propad', formatPct(resultA.maxDrawdown), formatPct(resultB.maxDrawdown), 'Počítáno z unitized NAV, ne z absolutní hodnoty s dalšími vklady.'), metricRow('Max. odchylka od cíle', formatPct(resultA.maxAllocationDrift), formatPct(resultB.maxAllocationDrift), 'Největší absolutní odchylka libovolného aktiva od cílové váhy po provedení investiční politiky. Tolerance se porovnává v procentních bodech.'), metricRow('Počet plných rebalancí', formatNumber(resultA.rebalanceCount, 0), formatNumber(resultB.rebalanceCount, 0), 'Kolikrát plné rebalancování překročilo toleranci a srovnalo portfolio zpět k cíli. První zainvestování vkladu se nepočítá.'), metricRow('Sharpe Ratio', formatNumber(resultA.sharpe), formatNumber(resultB.sharpe)), metricRow('Poplatky celkem', formatValue(resultA.totalFees), formatValue(resultB.totalFees)), metricRow('z toho TER', formatValue(resultA.totalTerFees), formatValue(resultB.totalTerFees)), metricRow('z toho správce/platforma', formatValue(resultA.totalManagerFees), formatValue(resultB.totalManagerFees)), metricRow('Transakční náklady', formatValue(resultA.totalTxCosts), formatValue(resultB.totalTxCosts)), metricRow('Finální CASH váha', formatPct(resultA.finalAllocation.CASH || 0), formatPct(resultB.finalAllocation.CASH || 0))].join('');
       drawValueChart(resultA, resultB); drawNavChart(resultA, resultB); drawAllocationChart('A', resultA.finalAllocation); drawAllocationChart('B', resultB.finalAllocation); initTooltips();
     }
     function setDiff(id, value, text) { const el = $(id); el.textContent = text; el.className = `h4 mb-0 ${value > 0 ? 'result-positive' : value < 0 ? 'result-negative' : ''}`; }
@@ -502,6 +554,7 @@
       test('+1 % měsíčně po 12 intervalů: 100 × 1.01^12', () => { const cfg = structuredCloneSafe(baseCfg); cfg.assets = { TEST_GROWTH_1PM: 1, CASH: 0 }; cfg.ter = { TEST_GROWTH_1PM: 0, CASH: 0 }; const data = { TEST_GROWTH_1PM: generateSyntheticPrices('TEST_GROWTH_1PM', baseGlobal.months) }; const res = simulatePortfolio(cfg, baseGlobal, baseGlobal.months, data); const expected = 100 * Math.pow(1.01, 12); return { pass: close(res.finalValue, expected, 1e-6), detail: `${formatValue(res.finalValue, 6)} vs ${formatValue(expected, 6)}` }; });
       test('Konstantní cena + měsíční vklady: final = celkem vloženo', () => { const cfg = structuredCloneSafe(baseCfg); cfg.initialInvestment = 0; cfg.monthlyInvestment = 100; const data = { TEST_FLAT: generateSyntheticPrices('TEST_FLAT', baseGlobal.months) }; const res = simulatePortfolio(cfg, baseGlobal, baseGlobal.months, data); return { pass: close(res.finalValue, res.totalInvested, 1e-6), detail: `final ${formatValue(res.finalValue, 6)}, vloženo ${formatValue(res.totalInvested, 6)}` }; });
       test('Buy-only při 100% alokaci nenechá vklad v cashi', () => { const cfg = structuredCloneSafe(baseCfg); cfg.initialInvestment = 0; cfg.monthlyInvestment = 100; cfg.rebalMode = 'buy'; const data = { TEST_FLAT: generateSyntheticPrices('TEST_FLAT', baseGlobal.months) }; const res = simulatePortfolio(cfg, baseGlobal, baseGlobal.months, data); const cash = res.finalAllocation.CASH || 0; return { pass: cash < 1e-9, detail: `CASH váha ${formatPct(cash, 8)}` }; });
+      test('Plné rebalancování s tolerancí 26 % drží dvě aktiva ve výsledku', () => { const cfg = structuredCloneSafe(baseCfg); cfg.assets = { TEST_SINE_HIGH: 0.5, TEST_NEG_SINE_HIGH: 0.5, CASH: 0 }; cfg.ter = { TEST_SINE_HIGH: 0, TEST_NEG_SINE_HIGH: 0, CASH: 0 }; cfg.rebalMode = 'full'; cfg.tolerance = 0.26; const data = { TEST_SINE_HIGH: generateSyntheticPrices('TEST_SINE_HIGH', baseGlobal.months), TEST_NEG_SINE_HIGH: generateSyntheticPrices('TEST_NEG_SINE_HIGH', baseGlobal.months) }; const res = simulatePortfolio(cfg, baseGlobal, baseGlobal.months, data); const hasBoth = Number.isFinite(res.finalValue) && res.history.every(h => Number.isFinite(h.value) && Number.isFinite(h.navIndex)) && (res.finalAllocation.TEST_SINE_HIGH || 0) > 0 && (res.finalAllocation.TEST_NEG_SINE_HIGH || 0) > 0; return { pass: hasBoth, detail: `final ${formatValue(res.finalValue, 6)}, alokace ${Object.keys(res.finalAllocation).join(', ')}` }; });
       $('testsSection').classList.remove('d-none'); $('testsOutput').innerHTML = `<div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Test</th><th>Stav</th><th>Detail</th></tr></thead><tbody>${tests.map(t => `<tr><td>${t.name}</td><td class="${t.pass ? 'test-pass' : 'test-fail'}">${t.pass ? 'PASS' : 'FAIL'}</td><td>${t.detail}</td></tr>`).join('')}</tbody></table></div>`;
     }
 
